@@ -1,0 +1,27 @@
+﻿<div class="box overflow-hidden">
+	<div class="box-body">
+		<div class="d-flex">
+			<h4 class="mb-0">@CurrentValue</h4>
+			<span class="badge badge-info badge-pill align-self-center ml-auto">+55,6%</span>
+		</div>
+
+		<div>
+			@Title
+			<div class="text-muted font-size-16">@AverageValue avg</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div id="chart_bar_basic"></div>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string Title{ get; set; }
+	[Parameter]
+	public decimal CurrentValue{ get; set; }
+	[Parameter]
+	public decimal AverageValue { get; set; }
+
+}
