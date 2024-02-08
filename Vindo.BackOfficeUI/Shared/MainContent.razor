@@ -1,27 +1,16 @@
-﻿<!-- Content Wrapper. Contains page content -->
+﻿
+@{
+	IList<decimal> data = new List<decimal>() { 1, 200, 300, 500, 900 };
+}
+
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<div class="container-full">
 		<!-- Main content -->
 		<section class="content">
 			<div class="row">
 				<div class="col-12 col-lg-4">
-					<div class="box overflow-hidden">
-						<div class="box-body">
-							<div class="d-flex">
-								<h4 class="mb-0">1,125</h4>
-								<span class="badge badge-info badge-pill align-self-center ml-auto">+55,6%</span>
-							</div>
-
-							<div>
-								User online
-								<div class="text-muted font-size-16">845 avg</div>
-							</div>
-						</div>
-
-						<div class="container-fluid">
-							<div id="chart_bar_basic"></div>
-						</div>
-					</div>
+					<BarChartBox AverageValue=600 CurrentValue=1500 Title="Riders Online" Data=@data ToolTip="Orders" ></BarChartBox>
 				</div>
 				<div class="col-12 col-lg-4">
 					<div class="box overflow-hidden">

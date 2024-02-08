@@ -239,224 +239,224 @@ function createWidgets() {
     
 
     // Simple bar charts
-    var _barChartWidget = function (element, barQty, height, animate, easing, duration, delay, color, tooltip) {
-        if (typeof d3 == 'undefined') {
-            console.warn('Warning - d3.min.js is not loaded.');
-            return;
-        }
+    //var _barChartWidget = function (element, barQty, height, animate, easing, duration, delay, color, tooltip) {
+    //    if (typeof d3 == 'undefined') {
+    //        console.warn('Warning - d3.min.js is not loaded.');
+    //        return;
+    //    }
 
-        // Initialize chart only if element exsists in the DOM
-        if (element) {
-
-
-            // Basic setup
-            // ------------------------------
-
-            // Add data set
-            var bardata = [];
-            for (var i = 0; i < barQty; i++) {
-                bardata.push(Math.round(Math.random() * 10) + 10);
-            }
-
-            // Main variables
-            var d3Container = d3.select(element),
-                width = d3Container.node().getBoundingClientRect().width;
+    //    // Initialize chart only if element exsists in the DOM
+    //    if (element) {
 
 
+    //        // Basic setup
+    //        // ------------------------------
 
-            // Construct scales
-            // ------------------------------
+    //        // Add data set
+    //        var bardata = [];
+    //        for (var i = 0; i < barQty; i++) {
+    //            bardata.push(Math.round(Math.random() * 10) + 10);
+    //        }
 
-            // Horizontal
-            var x = d3.scale.ordinal()
-                .rangeBands([0, width], 0.3);
-
-            // Vertical
-            var y = d3.scale.linear()
-                .range([0, height]);
+    //        // Main variables
+    //        var d3Container = d3.select(element),
+    //            width = d3Container.node().getBoundingClientRect().width;
 
 
 
-            // Set input domains
-            // ------------------------------
+    //        // Construct scales
+    //        // ------------------------------
 
-            // Horizontal
-            x.domain(d3.range(0, bardata.length));
+    //        // Horizontal
+    //        var x = d3.scale.ordinal()
+    //            .rangeBands([0, width], 0.3);
 
-            // Vertical
-            y.domain([0, d3.max(bardata)]);
-
-
-
-            // Create chart
-            // ------------------------------
-
-            // Add svg element
-            var container = d3Container.append('svg');
-
-            // Add SVG group
-            var svg = container
-                .attr('width', width)
-                .attr('height', height)
-                .append('g');
+    //        // Vertical
+    //        var y = d3.scale.linear()
+    //            .range([0, height]);
 
 
 
-            //
-            // Append chart elements
-            //
+    //        // Set input domains
+    //        // ------------------------------
 
-            // Bars
-            var bars = svg.selectAll('rect')
-                .data(bardata)
-                .enter()
-                .append('rect')
-                .attr('class', 'd3-random-bars')
-                .attr('width', x.rangeBand())
-                .attr('x', function (d, i) {
-                    return x(i);
-                })
-                .style('fill', color);
+    //        // Horizontal
+    //        x.domain(d3.range(0, bardata.length));
+
+    //        // Vertical
+    //        y.domain([0, d3.max(bardata)]);
 
 
 
-            // Tooltip
-            // ------------------------------
+    //        // Create chart
+    //        // ------------------------------
 
-            // Initiate
-            var tip = d3.tip()
-                .attr('class', 'd3-tip')
-                .offset([-10, 0]);
+    //        // Add svg element
+    //        var container = d3Container.append('svg');
 
-            // Show and hide
-            if (tooltip == "hours" || tooltip == "goal" || tooltip == "members") {
-                bars.call(tip)
-                    .on('mouseover', tip.show)
-                    .on('mouseout', tip.hide);
-            }
-
-            // Daily meetings tooltip content
-            if (tooltip == "hours") {
-                tip.html(function (d, i) {
-                    return "<div class='text-center'>" +
-                        "<h6 class='mb-0'>" + d + "</h6>" +
-                        "<span class='font-size-16'>meetings</span>" +
-                        "<div class='font-size-16'>" + i + ":00" + "</div>" +
-                        "</div>";
-                });
-            }
-
-            // Statements tooltip content
-            if (tooltip == "goal") {
-                tip.html(function (d, i) {
-                    return "<div class='text-center'>" +
-                        "<h6 class='mb-0'>" + d + "</h6>" +
-                        "<span class='font-size-16'>statements</span>" +
-                        "<div class='font-size-16'>" + i + ":00" + "</div>" +
-                        "</div>";
-                });
-            }
-
-            // Online members tooltip content
-            if (tooltip == "members") {
-                tip.html(function (d, i) {
-                    return "<div class='text-center bg-dark p-5'>" +
-                        "<h6 class='mb-0'>" + d + "0" + "</h6>" +
-                        "<span class='font-size-14'>members</span>" +
-                        "<div class='font-size-14'>" + i + ":00" + "</div>" +
-                        "</div>";
-                });
-            }
+    //        // Add SVG group
+    //        var svg = container
+    //            .attr('width', width)
+    //            .attr('height', height)
+    //            .append('g');
 
 
 
-            // Bar loading animation
-            // ------------------------------
+    //        //
+    //        // Append chart elements
+    //        //
 
-            // Choose between animated or static
-            if (animate) {
-                withAnimation();
-            } else {
-                withoutAnimation();
-            }
-
-            // Animate on load
-            function withAnimation() {
-                bars
-                    .attr('height', 0)
-                    .attr('y', height)
-                    .transition()
-                    .attr('height', function (d) {
-                        return y(d);
-                    })
-                    .attr('y', function (d) {
-                        return height - y(d);
-                    })
-                    .delay(function (d, i) {
-                        return i * delay;
-                    })
-                    .duration(duration)
-                    .ease(easing);
-            }
-
-            // Load without animateion
-            function withoutAnimation() {
-                bars
-                    .attr('height', function (d) {
-                        return y(d);
-                    })
-                    .attr('y', function (d) {
-                        return height - y(d);
-                    });
-            }
+    //        // Bars
+    //        var bars = svg.selectAll('rect')
+    //            .data(bardata)
+    //            .enter()
+    //            .append('rect')
+    //            .attr('class', 'd3-random-bars')
+    //            .attr('width', x.rangeBand())
+    //            .attr('x', function (d, i) {
+    //                return x(i);
+    //            })
+    //            .style('fill', color);
 
 
 
-            // Resize chart
-            // ------------------------------
+    //        // Tooltip
+    //        // ------------------------------
 
-            // Call function on window resize
-            $(window).on('resize', barsResize);
+    //        // Initiate
+    //        var tip = d3.tip()
+    //            .attr('class', 'd3-tip')
+    //            .offset([-10, 0]);
 
-            // Call function on sidebar width change
-            $(document).on('click', '.sidebar-control', barsResize);
+    //        // Show and hide
+    //        if (tooltip == "hours" || tooltip == "goal" || tooltip == "members") {
+    //            bars.call(tip)
+    //                .on('mouseover', tip.show)
+    //                .on('mouseout', tip.hide);
+    //        }
 
-            // Resize function
-            // 
-            // Since D3 doesn't support SVG resize by default,
-            // we need to manually specify parts of the graph that need to 
-            // be updated on window resize
-            function barsResize() {
+    //        // Daily meetings tooltip content
+    //        if (tooltip == "hours") {
+    //            tip.html(function (d, i) {
+    //                return "<div class='text-center'>" +
+    //                    "<h6 class='mb-0'>" + d + "</h6>" +
+    //                    "<span class='font-size-16'>meetings</span>" +
+    //                    "<div class='font-size-16'>" + i + ":00" + "</div>" +
+    //                    "</div>";
+    //            });
+    //        }
 
-                // Layout variables
-                width = d3Container.node().getBoundingClientRect().width;
+    //        // Statements tooltip content
+    //        if (tooltip == "goal") {
+    //            tip.html(function (d, i) {
+    //                return "<div class='text-center'>" +
+    //                    "<h6 class='mb-0'>" + d + "</h6>" +
+    //                    "<span class='font-size-16'>statements</span>" +
+    //                    "<div class='font-size-16'>" + i + ":00" + "</div>" +
+    //                    "</div>";
+    //            });
+    //        }
+
+    //        // Online members tooltip content
+    //        if (tooltip == "members") {
+    //            tip.html(function (d, i) {
+    //                return "<div class='text-center bg-dark p-5'>" +
+    //                    "<h6 class='mb-0'>" + d + "0" + "</h6>" +
+    //                    "<span class='font-size-14'>members</span>" +
+    //                    "<div class='font-size-14'>" + i + ":00" + "</div>" +
+    //                    "</div>";
+    //            });
+    //        }
 
 
-                // Layout
-                // -------------------------
 
-                // Main svg width
-                container.attr("width", width);
+    //        // Bar loading animation
+    //        // ------------------------------
 
-                // Width of appended group
-                svg.attr("width", width);
+    //        // Choose between animated or static
+    //        if (animate) {
+    //            withAnimation();
+    //        } else {
+    //            withoutAnimation();
+    //        }
 
-                // Horizontal range
-                x.rangeBands([0, width], 0.3);
+    //        // Animate on load
+    //        function withAnimation() {
+    //            bars
+    //                .attr('height', 0)
+    //                .attr('y', height)
+    //                .transition()
+    //                .attr('height', function (d) {
+    //                    return y(d);
+    //                })
+    //                .attr('y', function (d) {
+    //                    return height - y(d);
+    //                })
+    //                .delay(function (d, i) {
+    //                    return i * delay;
+    //                })
+    //                .duration(duration)
+    //                .ease(easing);
+    //        }
+
+    //        // Load without animateion
+    //        function withoutAnimation() {
+    //            bars
+    //                .attr('height', function (d) {
+    //                    return y(d);
+    //                })
+    //                .attr('y', function (d) {
+    //                    return height - y(d);
+    //                });
+    //        }
 
 
-                // Chart elements
-                // -------------------------
 
-                // Bars
-                svg.selectAll('.d3-random-bars')
-                    .attr('width', x.rangeBand())
-                    .attr('x', function (d, i) {
-                        return x(i);
-                    });
-            }
-        }
-    };
+    //        // Resize chart
+    //        // ------------------------------
+
+    //        // Call function on window resize
+    //        $(window).on('resize', barsResize);
+
+    //        // Call function on sidebar width change
+    //        $(document).on('click', '.sidebar-control', barsResize);
+
+    //        // Resize function
+    //        // 
+    //        // Since D3 doesn't support SVG resize by default,
+    //        // we need to manually specify parts of the graph that need to 
+    //        // be updated on window resize
+    //        function barsResize() {
+
+    //            // Layout variables
+    //            width = d3Container.node().getBoundingClientRect().width;
+
+
+    //            // Layout
+    //            // -------------------------
+
+    //            // Main svg width
+    //            container.attr("width", width);
+
+    //            // Width of appended group
+    //            svg.attr("width", width);
+
+    //            // Horizontal range
+    //            x.rangeBands([0, width], 0.3);
+
+
+    //            // Chart elements
+    //            // -------------------------
+
+    //            // Bars
+    //            svg.selectAll('.d3-random-bars')
+    //                .attr('width', x.rangeBand())
+    //                .attr('x', function (d, i) {
+    //                    return x(i);
+    //                });
+    //        }
+    //    }
+    //};
 
     // Simple line chart
     var _lineChartWidget = function (element, chartHeight, lineColor, pathColor, pointerLineColor, pointerBgColor) {
@@ -1025,7 +1025,7 @@ function createWidgets() {
         }
     };
 
-    _barChartWidget("#chart_bar_basic", 24, 50, true, "elastic", 1200, 50, "#5A8DEE", "members");
+    //_barChartWidget("#chart_bar_basic", 24, 50, true, "elastic", 1200, 50, "#5A8DEE", "members");
 
     _lineChartWidget('#line_chart_simple', 50, '#FDAC41', '#FDAC41', '#FDAC41', '#fff');
 
