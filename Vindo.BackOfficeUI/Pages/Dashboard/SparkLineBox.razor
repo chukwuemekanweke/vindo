@@ -1,0 +1,83 @@
+﻿@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<div class="box overflow-hidden">
+	<div class="box-body">
+		<div class="d-flex">
+			<h4 class="mb-0">@(CurrentValue)%</h4>
+			<div class="list-icons ml-auto">
+				<div class="list-icons-item dropdown">
+					<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i></a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="#" class="dropdown-item">Update data</a>
+						<a href="#" class="dropdown-item">Detailed log</a>
+						<a href="#" class="dropdown-item">Statistics</a>
+						<a href="#" class="dropdown-item">Clear list</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			@Title
+			<div class="text-muted font-size-16">@(AverageValue)%  avg</div>
+		</div>
+	</div>
+
+	<div id="sparklines_basic"></div>
+</div>
+
+@code {
+
+	[Parameter]
+	public string Title { get; set; } = null!;
+	[Parameter]
+	public string BarColour { get; set; } = null!;
+	[Parameter]
+	public decimal CurrentValue { get; set; }
+	[Parameter]
+	public decimal AverageValue { get; set; }
+	[Parameter]
+	public IList<decimal> Data { get; set; } = null!;
+	[Parameter]
+	public string Color { get; set; } = "#FF5B5C";
+	
+
+	private IJSObjectReference? module;
+
+
+	private async Task InitializeChartAsync()
+	{
+		if (module != null)
+		{
+			await module.InvokeVoidAsync("sparkLineWidget", "#sparklines_basic", "area", Data.Count, 50, "basis", 750, 2000, Color, Data);
+		}
+	}
+
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			module = await JS.ComponentModule<SparkLineBox>();
+			await InitializeChartAsync();
+		}
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await base.OnParametersSetAsync();
+
+		// Reinitialize the chart when parameters change
+		await InitializeChartAsync();
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (module != null)
+		{
+			await module.DisposeAsync();
+		}
+	}
+
+}
