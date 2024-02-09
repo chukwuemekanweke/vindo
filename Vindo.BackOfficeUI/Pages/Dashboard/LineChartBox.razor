@@ -1,0 +1,81 @@
+﻿@using Vindo.BackOfficeUI.Models.LineChart;
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<div class="box overflow-hidden">
+	<div class="box-body">
+		<div class="d-flex">
+			<h4 class="mb-0">@CurrentValue</h4>
+		</div>
+
+		<div>
+			@Title
+			<div class="text-muted font-size-16">@AverageValue avg</div>
+		</div>
+	</div>
+
+	<div id="line_chart_simple"></div>
+</div>
+
+@code {
+
+	[Parameter]
+	public string Title { get; set; } = null!;
+	[Parameter]
+	public string MetricName { get; set; } = null!;
+	[Parameter]
+	public string BarColour { get; set; } = null!;
+	[Parameter]
+	public decimal CurrentValue { get; set; }
+	[Parameter]
+	public decimal AverageValue { get; set; }
+	[Parameter]
+	public IList<ChartPoint> Data { get; set; } = null!;
+	[Parameter]
+	public string LineColor { get; set; } = "#FDAC41";
+	[Parameter]
+	public string PathColor { get; set; } = "#FDAC41";
+	[Parameter]
+	public string PointerLineColor { get; set; } = "#FDAC41";
+	[Parameter]
+	public string PointerBackgroundColor { get; set; } = "#fff";
+
+	private IJSObjectReference? module;
+
+
+	private async Task InitializeChartAsync()
+	{
+		if (module != null)
+		{
+			var data = Data.Select(x => new { Date = x.XAxis.ToString("MM/dd/yy"), Alpha = x.YAxis });		
+			await module.InvokeVoidAsync("lineChartWidget", "#line_chart_simple", 50, LineColor, PathColor, PointerLineColor, PointerBackgroundColor, data, MetricName);
+		}
+	}
+
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			module = await JS.ComponentModule<LineChartBox>();
+			await InitializeChartAsync();
+		}
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await base.OnParametersSetAsync();
+
+		// Reinitialize the chart when parameters change
+		await InitializeChartAsync();
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (module != null)
+		{
+			await module.DisposeAsync();
+		}
+	}
+
+}
