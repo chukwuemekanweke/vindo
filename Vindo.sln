@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vindo.BackOfficeUI", "Vindo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vindo.Models", "Vindo.Models\Vindo.Models.csproj", "{CFEFEC69-8AF4-4BC5-A50A-3FF975BEB626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vindo.UI.Shared", "Vindo.UI.Shared\Vindo.UI.Shared.csproj", "{96568454-CF23-4D95-A659-F608DB563A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vindo.UI.Shared", "Vindo.UI.Shared\Vindo.UI.Shared.csproj", "{96568454-CF23-4D95-A659-F608DB563A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

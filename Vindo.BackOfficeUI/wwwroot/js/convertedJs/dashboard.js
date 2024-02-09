@@ -1027,7 +1027,7 @@ function createWidgets() {
 
     //_barChartWidget("#chart_bar_basic", 24, 50, true, "elastic", 1200, 50, "#5A8DEE", "members");
 
-    _lineChartWidget('#line_chart_simple', 50, '#FDAC41', '#FDAC41', '#FDAC41', '#fff');
+    //_lineChartWidget('#line_chart_simple', 50, '#FDAC41', '#FDAC41', '#FDAC41', '#fff');
 
     _sparklinesWidget("#sparklines_basic", "area", 30, 50, "basis", 750, 2000, "#FF5B5C");
    

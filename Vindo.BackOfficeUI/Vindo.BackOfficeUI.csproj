@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Pages\Dashboard\BarChartBox\BarChartBox.razor.js">
+    <None Update="Pages\Dashboard\BarChartBox.razor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

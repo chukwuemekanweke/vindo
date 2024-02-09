@@ -52,7 +52,6 @@
         if (firstRender)
         {
             module = await JS.ComponentModule<BarChartBox>();
-            // module = await JS.InvokeAsync<IJSObjectReference>("import", "./Pages/Dashboard/BarChartBox/BarChartBox.razor.js");
             await InitializeChartAsync();
         }
     }

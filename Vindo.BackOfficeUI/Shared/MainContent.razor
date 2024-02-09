@@ -1,7 +1,24 @@
-﻿@using Vindo.BackOfficeUI.Pages.Dashboard.BarChartBox
+﻿@using Vindo.BackOfficeUI.Models.LineChart
+@using Vindo.BackOfficeUI.Pages.Dashboard
 
 @{
-	IList<decimal> data = new List<decimal>() { 1, 200, 300, 500, 900 };
+	Random random = new Random();
+
+	IList<decimal> barChartBoxdata = new List<decimal>() { 1, 200, 300, 500, 900 };
+	IList<ChartPoint> lineChartBoxdata = new List<ChartPoint>() { 
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-10), YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-9) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-8) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-7) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-6) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-5) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-4) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-3) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-2) , YAxis=random.Next(0, 61)},
+		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-1) , YAxis=random.Next(0, 61)},
+
+	};
+
 }
 
 <!-- Content Wrapper. Contains page content -->
@@ -11,23 +28,10 @@
 		<section class="content">
 			<div class="row">
 				<div class="col-12 col-lg-4">
-					<BarChartBox AverageValue=600 CurrentValue=1500 Title="Riders Online" Data=@data ToolTip="Orders" ></BarChartBox>
+					<BarChartBox AverageValue=600 CurrentValue=1500 Title="Riders Online" Data=@barChartBoxdata ToolTip="Orders"></BarChartBox>
 				</div>
 				<div class="col-12 col-lg-4">
-					<div class="box overflow-hidden">
-						<div class="box-body">
-							<div class="d-flex">
-								<h4 class="mb-0">3,952</h4>
-							</div>
-
-							<div>
-								Orders Monthly
-								<div class="text-muted font-size-16">9,758 avg</div>
-							</div>
-						</div>
-
-						<div id="line_chart_simple"></div>
-					</div>
+					<LineChartBox AverageValue=300 CurrentValue=2000 Title="Monthly Orders" Data=lineChartBoxdata MetricName="Orders"></LineChartBox>
 				</div>
 				<div class="col-12 col-lg-4">
 					<div class="box overflow-hidden">

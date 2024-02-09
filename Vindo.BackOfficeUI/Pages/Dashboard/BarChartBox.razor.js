@@ -1,8 +1,3 @@
-export function testLogging() {
-  console.log("Test Logging With Import Module")
-}
-
-
 export function barChartWidget(element, barQty, height, animate, easing, duration, delay, color, tooltip, bardata) {
     if (typeof d3 == 'undefined') {
         console.warn('Warning - d3.min.js is not loaded.');
