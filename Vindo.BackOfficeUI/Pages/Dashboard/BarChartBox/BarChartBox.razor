@@ -1,0 +1,77 @@
+﻿@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<div class="box overflow-hidden">
+	<div class="box-body">
+		<div class="d-flex">
+			<h4 class="mb-0">@CurrentValue</h4>
+			<span class="badge badge-info badge-pill align-self-center ml-auto">+55,6%</span>
+		</div>
+
+		<div>
+			@Title
+			<div class="text-muted font-size-16">@AverageValue avg</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div id="chart_bar_basic"></div>
+	</div>
+</div>
+
+
+@code {
+    private IJSObjectReference? module;
+
+    [Parameter]
+    public string Title { get; set; } = null!;   
+    [Parameter]
+    public string BarColour { get; set; } = null!;
+    [Parameter]
+    public decimal CurrentValue{ get; set; }
+    [Parameter]
+    public decimal AverageValue { get; set; }
+    [Parameter]
+    public IList<decimal> Data { get; set; } = null!;
+    [Parameter]
+    public string ToolTip { get; set; } = "#5A8DEE";
+    [Parameter]
+    public string DataBarColour { get; set; } = "#5A8DEE";
+
+    private async Task InitializeChartAsync()
+    {
+        if (module != null)
+        {
+            await module.InvokeVoidAsync("barChartWidget", "#chart_bar_basic", Data.Count, 50, true, "elastic", 1200, 50, DataBarColour, ToolTip, Data);
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.ComponentModule<BarChartBox>();
+            // module = await JS.InvokeAsync<IJSObjectReference>("import", "./Pages/Dashboard/BarChartBox/BarChartBox.razor.js");
+            await InitializeChartAsync();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        // Reinitialize the chart when parameters change
+        await InitializeChartAsync();
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module != null)
+        {
+            await module.DisposeAsync();
+        }
+    }
+
+}
+

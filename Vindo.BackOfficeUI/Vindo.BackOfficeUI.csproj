@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,4 +16,13 @@
     <Folder Include="wwwroot\js\convertedJs\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vindo.UI.Shared\Vindo.UI.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Pages\Dashboard\BarChartBox\BarChartBox.razor.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
