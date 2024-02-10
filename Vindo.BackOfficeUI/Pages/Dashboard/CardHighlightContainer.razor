@@ -1,0 +1,22 @@
+﻿@foreach (var row in CardHighlights)
+{
+
+	int columnScale = 12 / row.Length;
+	string className = $"col-lg-{columnScale} col-12";
+
+	<div class="row">
+		@foreach (var column in row)
+		{
+			<div class=@(className)>
+				@(column)
+			</div>
+		}
+	</div>
+
+}
+
+
+@code {
+	[Parameter]
+	public RenderFragment[][] CardHighlights { get; set; } = null!;
+}

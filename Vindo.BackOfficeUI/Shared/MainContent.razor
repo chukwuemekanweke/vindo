@@ -138,54 +138,8 @@
 					<ApexChart Data=apexChartData Title="Orders Overview" />
 					<ProgressBarCircleContainer ProgressBars=progressBars Title="Revenue Growths (%)" />
 				</div>
-				<div class="col-xl-6 col-12">
-					<div class="row">
-						<div class="col-lg-4 col-12">
-							<div class="box">
-								<div class="box-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<h4>Last Month</h4>
-										<h4>12%</h4>
-									</div>
-									<h1 class="my-40">10,200</h1>
-									<div class="d-flex justify-content-between align-items-center">
-										<h5 class="mb-0">Views</h5>
-										<h5 class="mb-0"><i class="ti-arrow-up text-light"></i></h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-12">
-							<div class="box bg-primary">
-								<div class="box-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<h4 class="text-white">Last Month</h4>
-										<h4 class="text-white-50">12%</h4>
-									</div>
-									<h1 class="my-40 text-white">105K</h1>
-									<div class="d-flex justify-content-between align-items-center">
-										<h5 class="mb-0 text-white">Subscription</h5>
-										<h5 class="mb-0 text-white"><i class="ti-arrow-up text-light"></i></h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-12">
-							<div class="box">
-								<div class="box-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<h4>Last Month</h4>
-										<h4>12%</h4>
-									</div>
-									<h1 class="my-40">645</h1>
-									<div class="d-flex justify-content-between align-items-center">
-										<h5 class="mb-0">Videos</h5>
-										<h5 class="mb-0"><i class="ti-arrow-up text-light"></i></h5>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="col-xl-6 col-12">					
+					<CardHighlightContainer CardHighlights=cardHighlights />
 					<div class="box">
 						<div class="box-header">
 							<h4 class="box-title">
@@ -347,6 +301,7 @@
 @code {
 
 	RenderFragment[][] progressBars;
+	RenderFragment[][] cardHighlights;
 
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -378,6 +333,23 @@
 				CreateProgressBar("Yearly", 75)
 			},
 		};
+
+		cardHighlights = new RenderFragment[][]
+		{
+			new RenderFragment[]
+			{
+				CreateCardHighlight("Last Month", 12, 10200, "Views", true),
+				CreateCardHighlight("Last Quarter", 3, 655, "Subscriptions", false),
+				CreateCardHighlight("Last Week", 1.5, 105000, "Videos", true),
+
+			},
+			new RenderFragment[]
+			{
+				CreateCardHighlight("Last Year", 12, 10200, "Users", true),
+				CreateCardHighlight("Last 2 Years", 0.1, 10100, "Users", false),
+				CreateCardHighlight("Last 3 Years", 1.5, 10000, "Users", false),
+			},
+		};
 	}
 
 	RenderFragment CreateProgressBar(string title, double value) => builder =>
@@ -385,6 +357,17 @@
 		builder.OpenComponent<ProgressBarCircle>(0);
 		builder.AddAttribute(1, "Value", value);
 		builder.AddAttribute(2, "Title", title);
+		builder.CloseComponent();
+	};
+
+	RenderFragment CreateCardHighlight(string timePeriod, double growthRate, decimal currentValue, string metricName, bool isUpwardMetric) => builder =>
+	{
+		builder.OpenComponent<CardHighlight>(0);
+		builder.AddAttribute(1, "TimePeriod", timePeriod);
+		builder.AddAttribute(2, "GrowthRate", growthRate);
+		builder.AddAttribute(3, "CurrentValue", currentValue);
+		builder.AddAttribute(4, "MetricName", metricName);
+		builder.AddAttribute(5, "IsUpwardMetric", isUpwardMetric);
 		builder.CloseComponent();
 	};
 
