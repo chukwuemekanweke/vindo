@@ -114,6 +114,8 @@
 		}
 	};
 
+	
+
 
 }
 
@@ -134,21 +136,7 @@
 				</div>
 				<div class="col-xl-6 col-12">				
 					<ApexChart Data=apexChartData Title="Orders Overview" />
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">Revenue Groth (%)</h4>
-						</div>
-						<div class="box-body">
-							<div class="row">
-								<div class="col-lg-6 col-12">								
-									<ProgressBarCircle Title="Monthly" Value=30></ProgressBarCircle>
-								</div>
-								<div class="col-lg-6 col-12">
-									<ProgressBarCircle Title="Yearly" Value=90></ProgressBarCircle>
-								</div>
-							</div>
-						</div>
-					</div>
+					<ProgressBarCircleContainer ProgressBars=progressBars Title="Revenue Growths (%)" />
 				</div>
 				<div class="col-xl-6 col-12">
 					<div class="row">
@@ -358,6 +346,8 @@
 <!-- /.content-wrapper -->
 @code {
 
+	RenderFragment[][] progressBars;
+
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
@@ -366,6 +356,37 @@
 			await JSRuntime.InvokeVoidAsync("initializeDashboardCharts");
 		}
 	}
+
+	protected override void OnInitialized()
+	{
+		RenderFragments();
+	}
+
+	void RenderFragments()
+	{
+		
+		progressBars = new RenderFragment[][]
+		{
+			new RenderFragment[]
+			{
+				CreateProgressBar("Weekly", 30),
+				CreateProgressBar("Monthly", 90)				
+			},
+			new RenderFragment[]
+			{				
+				CreateProgressBar("Quarterly", 55),
+				CreateProgressBar("Yearly", 75)
+			},
+		};
+	}
+
+	RenderFragment CreateProgressBar(string title, double value) => builder =>
+	{
+		builder.OpenComponent<ProgressBarCircle>(0);
+		builder.AddAttribute(1, "Value", value);
+		builder.AddAttribute(2, "Title", title);
+		builder.CloseComponent();
+	};
 
 }
 
