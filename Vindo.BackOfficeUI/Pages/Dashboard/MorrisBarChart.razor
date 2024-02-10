@@ -1,0 +1,69 @@
+﻿@using Vindo.BackOfficeUI.Extensions
+@using Vindo.BackOfficeUI.Models.MorrisBarChart
+
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<div class="box">
+	<div class="box-header">
+		<h4 class="box-title">
+			Budget
+		</h4>
+	</div>
+	<div class="box-body">
+		<div id="@DomId" class="morris-chart h-200"></div>
+	</div>
+</div>
+@code {
+	[Parameter]
+	public string Title { get; set; } = null!;
+
+	/// <summary>
+	/// Unit for the metrics being visualized. E.g $, Kg, Km, GB, Eur e.t.c
+	/// </summary>
+	[Parameter]
+	public string PreUnit { get; set; } = null!;
+
+	[Parameter]
+	public IEnumerable<DataPoint> Data { get; set; } = null!;
+
+	private string DomId { get; set; } = DOMIdGenerator.GenerateId().Substring(0, 10);
+
+
+	private IJSObjectReference? module;
+
+
+	private async Task InitializeChartAsync()
+	{
+		if (module != null)
+		{
+			await module.InvokeVoidAsync("morrisBarChartWidget", $"{DomId}", Data.ToGraphDataPoints(), "XKey", PreUnit);
+		}
+	}
+
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			module = await JS.ComponentModule<MorrisBarChart>();
+			await InitializeChartAsync();
+		}
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await base.OnParametersSetAsync();
+
+		// Reinitialize the chart when parameters change
+		await InitializeChartAsync();
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (module != null)
+		{
+			await module.DisposeAsync();
+		}
+	}
+}

@@ -1,5 +1,6 @@
 ﻿@using Vindo.BackOfficeUI.Models.ApexChart
 @using Vindo.BackOfficeUI.Models.LineChart
+@using Vindo.BackOfficeUI.Models.MorrisBarChart
 @using Vindo.BackOfficeUI.Pages.Dashboard
 
 @{
@@ -114,7 +115,49 @@
 		}
 	};
 
-	
+	IEnumerable<DataPoint> morrisBarChartData = new List<DataPoint>
+	{
+		new DataPoint
+		{
+		  XKey = "Dangote Cement",
+		  Values = new Dictionary<string, object>
+		  {
+			  {"EPS", 23.1},
+			  {"P/E Ratio", 2.3},
+			  {"Cash Flow Ratio", 12.2},
+		  }
+		},
+		new DataPoint
+		{
+		  XKey = "BUA Cement",
+		  Values = new Dictionary<string, object>
+		  {
+			  {"EPS", 22.6},
+			  {"P/E Ratio", 5.3},
+			  {"Cash Flow Ratio", 9.7},
+		  }
+		},
+		new DataPoint
+		{
+		  XKey = "Dangote Sugar",
+		  Values = new Dictionary<string, object>
+		  {
+			  {"EPS", 1.6},
+			  {"P/E Ratio", 50.6},
+			  {"Cash Flow Ratio", 1.1},
+		  }
+		},
+		new DataPoint
+		{
+		  XKey = "Flour Mills Of Nigeria",
+		  Values = new Dictionary<string, object>
+		  {
+			  {"EPS", 25.3},
+			  {"P/E Ratio", 95.3},
+			  {"Cash Flow Ratio", 30},
+		  }
+		}
+	};
 
 
 }
@@ -140,16 +183,8 @@
 				</div>
 				<div class="col-xl-6 col-12">					
 					<CardHighlightContainer CardHighlights=cardHighlights />
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">
-								Budget
-							</h4>
-						</div>
-						<div class="box-body">
-							<div id="morris-bar-chart" class="morris-chart h-200"></div>
-						</div>
-					</div>
+					<MorrisBarChart Data=morrisBarChartData PreUnit="" Title="Stock Report" />
+					
 					<div class="box">
 						<div class="box-body">
 							<ol class="c-progress-steps">
