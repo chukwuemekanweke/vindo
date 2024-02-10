@@ -1,4 +1,5 @@
-﻿@using Vindo.BackOfficeUI.Models.LineChart
+﻿@using Vindo.BackOfficeUI.Models.ApexChart
+@using Vindo.BackOfficeUI.Models.LineChart
 @using Vindo.BackOfficeUI.Pages.Dashboard
 
 @{
@@ -50,6 +51,70 @@
 		random.Next(0, 1000)
 	};
 
+	ChartData<int> apexChartData = new ChartData<int>
+	{
+
+		Series = new List<ApexChartSeriesData<int>>
+		{
+			new ApexChartSeriesData<int>
+			{
+				Name = "Online",
+				Data = new List<int> {
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+				}
+			},
+			new ApexChartSeriesData<int>
+			{
+				Name = "In Store",
+				Data = new List<int> {
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+				}
+			},
+			new ApexChartSeriesData<int>
+			{
+				Name = "Total Visits",
+				Data = new List<int> {
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+					random.Next(0, 1000),
+				}
+			}
+
+		}
+	};
+
+
 }
 
 <!-- Content Wrapper. Contains page content -->
@@ -67,19 +132,8 @@
 				<div class="col-12 col-lg-4">
 					<SparkLineBox AverageValue="200" CurrentValue=70.5m Title="Orders Load" Data=sparkLineBoxdata></SparkLineBox>					
 				</div>
-				<div class="col-xl-6 col-12">
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">
-								Sales Overview
-							</h4>
-						</div>
-						<div class="box-body">
-							<div class="chart">
-								<div id="sales-overview"></div>
-							</div>
-						</div>
-					</div>
+				<div class="col-xl-6 col-12">				
+					<ApexChart Data=apexChartData Title="Orders Overview" />
 					<div class="box">
 						<div class="box-header">
 							<h4 class="box-title">Revenue Groth (%)</h4>

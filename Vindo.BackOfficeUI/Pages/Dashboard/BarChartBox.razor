@@ -21,7 +21,6 @@
 
 
 @code {
-    private IJSObjectReference? module;
 
     [Parameter]
     public string Title { get; set; } = null!;   
@@ -37,6 +36,9 @@
     public string ToolTip { get; set; } = "#5A8DEE";
     [Parameter]
     public string DataBarColour { get; set; } = "#5A8DEE";
+
+    private IJSObjectReference? module;
+
 
     private async Task InitializeChartAsync()
     {

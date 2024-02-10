@@ -12,7 +12,17 @@ public static class Extensions
         var type = typeof(T);
         var sb = new StringBuilder("./");
 
-        sb.Append(type.FullName.Remove(0, type.Assembly.GetName().Name.Length + 1).Replace(".", "/"));
+		string fullName = type.FullName;
+		string name = type.Assembly.GetName().Name;
+
+		bool isGenericType = CheckIfTypeIsGeneric(type);
+		if(isGenericType)
+		{
+			fullName = GetClassNameWithoutGenerics(fullName);
+		}
+
+
+		sb.Append(fullName.Remove(0, name.Length + 1).Replace(".", "/"));
         sb.Append(".razor.js");
 
         var file = sb.ToString();
@@ -21,4 +31,26 @@ public static class Extensions
         return result;
 
     }
+
+	public static bool CheckIfTypeIsGeneric(Type type)
+	{
+		if (type.IsGenericType)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public static string GetClassNameWithoutGenerics(string fullName)
+	{
+		int backtickIndex = fullName.IndexOf('`');
+		if (backtickIndex >= 0)
+		{
+			fullName = fullName.Substring(0, backtickIndex);
+		}
+		return fullName;
+	}
 }

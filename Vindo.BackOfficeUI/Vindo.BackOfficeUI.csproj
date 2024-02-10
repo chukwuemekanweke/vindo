@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Pages\Dashboard\ApexChart.razor.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Pages\Dashboard\BarChartBox.razor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

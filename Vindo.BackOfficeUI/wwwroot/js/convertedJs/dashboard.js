@@ -78,7 +78,7 @@ function initializeDashboardCharts() {
 		options
 	);
 
-	chart.render();
+	//chart.render();
 
 
 	// Morris bar chart
