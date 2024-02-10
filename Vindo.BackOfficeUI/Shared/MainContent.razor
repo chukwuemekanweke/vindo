@@ -1,6 +1,7 @@
 ﻿@using Vindo.BackOfficeUI.Models.ApexChart
 @using Vindo.BackOfficeUI.Models.LineChart
 @using Vindo.BackOfficeUI.Models.MorrisBarChart
+@using Vindo.BackOfficeUI.Models.ProgressSteps
 @using Vindo.BackOfficeUI.Pages.Dashboard
 
 @{
@@ -159,6 +160,15 @@
 		}
 	};
 
+	IEnumerable<ProgressStep> progressStepsData = new List<ProgressStep>
+	{
+		new ProgressStep{StepName = "Planning", IsDone=true},
+		new ProgressStep{StepName = "Design", IsDone=true},
+		new ProgressStep{StepName = "Development", IsDone=true},
+		new ProgressStep{StepName = "Deployment", IsDone=true},
+		new ProgressStep{StepName = "QA", IsDone=false},
+
+	};
 
 }
 
@@ -184,17 +194,7 @@
 				<div class="col-xl-6 col-12">					
 					<CardHighlightContainer CardHighlights=cardHighlights />
 					<MorrisBarChart Data=morrisBarChartData PreUnit="" Title="Stock Report" />
-					
-					<div class="box">
-						<div class="box-body">
-							<ol class="c-progress-steps">
-								<li class="c-progress-steps__step  done"><span>Planing</span></li>
-								<li class="c-progress-steps__step  done"><span>Design</span></li>
-								<li class="c-progress-steps__step  current"><span>Development</span></li>
-								<li class="c-progress-steps__step"><span>Testing</span></li>
-							</ol>
-						</div>
-					</div>
+					<ProgressSteps Steps=progressStepsData />
 					<div class="box bg-warning">
 						<div class="box-body">
 							<div class="d-flex align-items-center justify-content-between">

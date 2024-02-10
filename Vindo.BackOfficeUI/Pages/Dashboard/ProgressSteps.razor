@@ -1,0 +1,16 @@
+﻿@using Vindo.BackOfficeUI.Models.ProgressSteps
+<div class="box">
+	<div class="box-body">
+		<ol class="c-progress-steps">
+
+			@foreach (var step in Steps)
+			{
+				<li class="c-progress-steps__step  @(step.IsDone? "done": "current")"><span>@step.StepName</span></li>
+			}
+		</ol>
+	</div>
+</div>
+@code {
+	[Parameter]
+	public IEnumerable<ProgressStep> Steps { get; set; } = null!;
+}
