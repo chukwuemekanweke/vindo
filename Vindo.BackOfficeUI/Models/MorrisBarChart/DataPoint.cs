@@ -4,7 +4,7 @@ namespace Vindo.BackOfficeUI.Models.MorrisBarChart;
 
 public sealed class DataPoint
 {
-	public string XKey { get; set; } = null!;
+	public required string XKey { get; set; }
 	public Dictionary<string, object> Values { get; set; }
 
 	public DataPoint()
@@ -24,16 +24,16 @@ public sealed class DataPoint
 			throw new ArgumentNullException(nameof(record));
 		}
 
-		DataPoint dataPoint = new DataPoint();
 		PropertyInfo? xAxisProperty = record.GetType()!.GetProperty(XKey);
-		if (xAxisProperty != null)
-		{
-			dataPoint.XKey = xAxisProperty.GetValue(record)?.ToString()?? throw new InvalidOperationException($"{xAxisProperty} cannot be null");
-		}
-		else
+		if (xAxisProperty == null)
 		{
 			throw new ArgumentException($"Property '{XKey}' not found in record type.");
 		}
+		
+		DataPoint dataPoint = new DataPoint() 
+		{ 
+			XKey = xAxisProperty.GetValue(record)?.ToString() ?? throw new InvalidOperationException($"{xAxisProperty} cannot be null")
+		};
 
 		PropertyInfo[] properties = record.GetType().GetProperties();
 		foreach (PropertyInfo property in properties)

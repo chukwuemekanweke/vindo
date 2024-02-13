@@ -5,33 +5,6 @@ function initializeDashboardCharts() {
 	'use strict';
 
 
-	// Morris bar chart
-
-	//Morris.Bar({
-	//	element: 'morris-bar-chart', data: [
-	//		{ y: 'Blom', a: 10000, b: 8000, c: 7800 },
-	//		{ y: 'BookShow', a: 8500, b: 7000, c: 6500 },
-	//		{ y: 'Farming', a: 9000, b: 7500, c: 7000 },
-	//		{ y: 'Transfer', a: 9500, b: 8500, c: 7500 },
-	//		{ y: 'Trading', a: 7500, b: 5500, c: 5000 },
-	//		{ y: 'Banking', a: 7500, b: 5500, c: 5000 }
-	//	],
-	//	barGap: 2,
-	//	barSizeRatio: 0.50,
-	//	barShape: 'soft',
-	//	barRadius: [5, 5, 5, 5],
-	//	xkey: 'y',
-	//	ykeys: ['a', 'b', 'c'],
-	//	labels: ['Total', 'Used', 'Target'],
-	//	barColors: ['#2444e8', '#843cf7', '#ec4b71'],
-	//	hideHover: 'auto',
-	//	preUnits: "$",
-	//	gridLineColor: '#d2d6e6',
-	//	gridTextColor: '#8997bd',
-	//	resize: true,
-	//}
-	//);
-
 	// area chart
 	Morris.Area({
 		element: 'area-chart3',

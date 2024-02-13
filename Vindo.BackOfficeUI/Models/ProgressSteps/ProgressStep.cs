@@ -2,7 +2,7 @@
 {
 	public class ProgressStep
 	{
-		public string StepName { get; set; } = null!;
-		public bool IsDone { get; set; }
+		public required string StepName { get; set; }
+		public required bool IsDone { get; set; }
 	}
 }

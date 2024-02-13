@@ -1,0 +1,23 @@
+﻿@using Vindo.BackOfficeUI.Models.Colors
+
+<a href="#" class="mr-2" @onclick="HandleAction"><i class="fa fa-edit text-info"></i></a>
+
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnAction { get; set; }
+
+    [Parameter]
+    public ColorMood Mood { get; set; }
+
+    [Parameter]
+    public required string RecordIdentifier { get; set; } 
+
+    private async Task HandleAction()
+    {
+        if (OnAction.HasDelegate)
+        {
+            await OnAction.InvokeAsync(RecordIdentifier);
+        }
+    }
+}

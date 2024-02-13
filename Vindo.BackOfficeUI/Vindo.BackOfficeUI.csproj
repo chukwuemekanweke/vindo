@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vindo.Models\Vindo.Models.csproj" />
     <ProjectReference Include="..\Vindo.UI.Shared\Vindo.UI.Shared.csproj" />
   </ItemGroup>
 
@@ -30,7 +31,7 @@
     <None Update="Pages\Dashboard\MorrisBarChart.razor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Dashboard\ProgressBarCircle.razor.js">
+    <None Update="Pages\Dashboard\ProgressBarCircle\ProgressBarCircle.razor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Pages\Dashboard\SparkLineBox.razor.js">

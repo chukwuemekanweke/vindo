@@ -1,0 +1,30 @@
+﻿@using Vindo.BackOfficeUI.Models.Colors
+<div class="box @(ColorClassGenerator.GenerateDomClass(Theme, Mood))">
+	<div class="box-body">
+		<div class="d-flex align-items-center justify-content-between">
+			<div>
+				<h4 class="mb-0 text-dark">@Topic</h4>
+			</div>
+			<div>
+				<a href="javascript:void(0)">
+					<i class="ti-close text-white"></i>
+				</a>
+			</div>
+		</div>
+		<h2 class="font-weight-300 text-dark">@Description</h2>
+		<button type="button" class="waves-effect waves-light btn btn-rounded btn-success float-right">@PromptText</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string Topic { get; set; } = null!;
+	[Parameter]
+	public string Description { get; set; } = null!;
+	[Parameter]
+	public string PromptText { get; set; } = null!;
+	[Parameter]
+	public ColorTheme Theme{ get; set; }
+	[Parameter]
+	public ColorMood Mood { get; set; }
+}

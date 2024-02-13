@@ -2,13 +2,13 @@
 
 public class ChartData<T>
 {
-    public IList<ApexChartSeriesData<T>> Series { get; set; } = null!;
-    public IList<string> XAxis { get; set; } = null!;
+    public required IList<ApexChartSeriesData<T>> Series { get; set; } 
+    public required IList<string> XAxis { get; set; } 
 
 }
 
 public class ApexChartSeriesData<T>
 {
-    public string Name { get; set; } = null!;
-    public IList<T> Data { get; set; } = null!;
+    public required string Name { get; set; } 
+    public required IList<T> Data { get; set; } 
 }
