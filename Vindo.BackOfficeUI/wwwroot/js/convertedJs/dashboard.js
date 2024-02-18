@@ -6,6 +6,7 @@ function initializeDashboardCharts() {
 
 
 	// area chart
+	/*
 	Morris.Area({
 		element: 'area-chart3',
 		data: [{
@@ -38,7 +39,6 @@ function initializeDashboardCharts() {
 			data2: 15
 		}
 
-
 		],
 		lineColors: ['#FDAC41', '#FF5B5C'],
 		xkey: 'period',
@@ -55,7 +55,7 @@ function initializeDashboardCharts() {
 		axes: false,
 
 	});
-	
+	*/
 
 
 

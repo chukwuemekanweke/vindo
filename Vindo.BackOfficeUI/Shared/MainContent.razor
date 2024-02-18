@@ -31,14 +31,14 @@
                 </div>
                 <div class="col-xl-6 col-12">
                     <CardHighlightContainer CardHighlights=cardHighlights />
-                    <MorrisBarChart Data=morrisBarChartData PreUnit="" Title="Stock Report" />
+                    <MorrisBarChart Data=morrisBarChartData PreUnit="$" Title="Stock Report" />
                     <ProgressSteps Steps=progressStepsData />
                     <QuickNote Topic="Quick Note" Description="Sample Description From Shared Component" PromptText="Submit" Mood=ColorMood.Warning Theme=ColorTheme.GradientLight />
                 </div>
                 <div class="col-xl-8 col-12">
                     <SimpleTable Data=tableData Title="User Reports Auto Generated" >                       
                     </SimpleTable>
-                    <SimpleTable Title="User Reports" >
+                    <SimpleTable Title="User Reports Manual Content Population" >
                         <HeaderContent>
                             <th>User</th>
                             <th>Email</th>
@@ -65,16 +65,8 @@
 
                 </div>
                 <div class="col-xl-4 col-12">
-                    <div class="box bg-primary">
-                        <div class="box-header no-border">
-                            <h4 class="box-title text-white">
-                                Sales Volum‬
-                            </h4>
-                        </div>
-                        <div class="box-body p-0">
-                            <div id="area-chart3" class="h-250"></div>
-                        </div>
-                    </div>
+                    <MorrisAreaChart Data=morrisAreaChartData Color=ColorMood.Secondary Title="Sales Volume" />
+
                     <div class="box box-body bg-danger">
                         <h4>
                             <span class="text-white">Visitors</span>
@@ -104,6 +96,8 @@
     IList<decimal>? sparkLineBoxdata;
     ChartData<int>? apexChartData;
     IEnumerable<DataPoint>? morrisBarChartData;
+    IEnumerable<DataPoint>? morrisAreaChartData;
+
     IEnumerable<ProgressStep>? progressStepsData;
     TableData? tableData;
     IList<UserDto>? users;
@@ -285,48 +279,90 @@
             };
 
         morrisBarChartData = new List<DataPoint>
-    {
-        new DataPoint
         {
-          XKey = "Dangote Cement",
-          Values = new Dictionary<string, object>
-          {
-              {"EPS", 23.1},
-              {"P/E Ratio", 2.3},
-              {"Cash Flow Ratio", 12.2},
-          }
-        },
-        new DataPoint
+            new DataPoint
+            {
+              XKey = "Dangote Cement",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 23.1},
+                  {"P/E Ratio", 2.3},
+                  {"Cash Flow Ratio", 12.2},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "BUA Cement",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 22.6},
+                  {"P/E Ratio", 5.3},
+                  {"Cash Flow Ratio", 9.7},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "Dangote Sugar",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 1.6},
+                  {"P/E Ratio", 50.6},
+                  {"Cash Flow Ratio", 1.1},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "Flour Mills Of Nigeria",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 25.3},
+                  {"P/E Ratio", 95.3},
+                  {"Cash Flow Ratio", 30},
+              }
+            }
+        };
+
+        morrisAreaChartData = new List<DataPoint>
         {
-          XKey = "BUA Cement",
-          Values = new Dictionary<string, object>
-          {
-              {"EPS", 22.6},
-              {"P/E Ratio", 5.3},
-              {"Cash Flow Ratio", 9.7},
-          }
-        },
-        new DataPoint
-        {
-          XKey = "Dangote Sugar",
-          Values = new Dictionary<string, object>
-          {
-              {"EPS", 1.6},
-              {"P/E Ratio", 50.6},
-              {"Cash Flow Ratio", 1.1},
-          }
-        },
-        new DataPoint
-        {
-          XKey = "Flour Mills Of Nigeria",
-          Values = new Dictionary<string, object>
-          {
-              {"EPS", 25.3},
-              {"P/E Ratio", 95.3},
-              {"Cash Flow Ratio", 30},
-          }
-        }
-    };
+            new DataPoint
+            {
+              XKey = "2013",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 0},
+                  {"Data2", 0},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "2014",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 55},
+                  {"Data2", 20},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "2015",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 25},
+                  {"Data2", 55},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "2016",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 65},
+                  {"Data2", 17},
+              }
+            }
+        };
+
+
 
         progressStepsData = new List<ProgressStep>
     {
