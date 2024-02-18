@@ -1,0 +1,58 @@
+﻿@inject IJSRuntime JS
+@implements IAsyncDisposable
+<div>
+    <div id="_@ProgressBarId" class="mx-auto w-200 my-25 position-relative text-center"></div>
+    <h4 class="text-center">@Title</h4>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = null!;
+
+	[Parameter]
+	public double Value { get; set; }
+
+    // private string ProgressBarId { get; set; } = DOMIdGenerator.GenerateId();
+    private string ProgressBarId { get; set; } = DOMIdGenerator.GenerateId().Substring(0,10);
+
+
+    private IJSObjectReference? module;
+
+
+
+
+    private async Task InitializeChartAsync()
+    {
+        if (module != null)
+        {
+            await module.InvokeVoidAsync("progressBarCircleWidget", $"#_{ProgressBarId}", Value);
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.ComponentModule<ProgressBarCircle>();
+            await InitializeChartAsync();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        // Reinitialize the chart when parameters change
+        await InitializeChartAsync();
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module != null)
+        {
+            await module.DisposeAsync();
+        }
+    }
+
+}

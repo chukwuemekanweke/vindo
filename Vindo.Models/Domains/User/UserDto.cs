@@ -3,8 +3,10 @@
 public class UserDto
 {
     public string Id { get; init; } = null!;
-    public string FirstName { get; init; } = null!;
-    public string LastName { get; init; } = null!;
-    public string Email { get; init; } = null!;
-    public string Username { get;init; } = null!;
+    public required string FirstName { get; init; } = null!;
+    public required string LastName { get; init; } = null!;
+    public required string Email { get; init; } = null!;
+    public required string Username { get;init; } = null!;
+    public string? ImageUrl { get; init; }
+    public bool IsActive { get; init; }
 }

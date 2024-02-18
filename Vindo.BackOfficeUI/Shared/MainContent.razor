@@ -1,319 +1,504 @@
-﻿@using Vindo.BackOfficeUI.Models.LineChart
+﻿@using Vindo.BackOfficeUI.Models.ApexChart
+@using Vindo.BackOfficeUI.Models.Colors
+@using Vindo.BackOfficeUI.Models.LineChart
+@using Vindo.BackOfficeUI.Models.MorrisBarChart
+@using Vindo.BackOfficeUI.Models.ProgressSteps
+@using Vindo.BackOfficeUI.Models.Tables
 @using Vindo.BackOfficeUI.Pages.Dashboard
-
-@{
-	Random random = new Random();
-
-	IList<decimal> barChartBoxdata = new List<decimal>() { 
-		random.Next(0, 100), 
-		random.Next(0, 100),
-		random.Next(0, 100),
-		random.Next(0, 100),
-		random.Next(0, 100),
-	};
-
-
-	IList<ChartPoint> lineChartBoxdata = new List<ChartPoint>() { 
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-10), YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-9) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-8) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-7) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-6) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-5) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-4) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-3) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-2) , YAxis=random.Next(0, 61)},
-		new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-1) , YAxis=random.Next(0, 61)},
-
-	};
-
-	IList<decimal> sparkLineBoxdata = new List<decimal>() {
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000),
-		random.Next(0, 1000)
-	};
-
-}
+@using Vindo.BackOfficeUI.Pages.Dashboard.CardHighlight
+@using Vindo.BackOfficeUI.Pages.Dashboard.ProgressBarCircle
+@using Vindo.BackOfficeUI.Pages.Dashboard.SimpleTable
+@using Vindo.Models.Domains.User
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-	<div class="container-full">
-		<!-- Main content -->
-		<section class="content">
-			<div class="row">
-				<div class="col-12 col-lg-4">
-					<BarChartBox AverageValue=600 CurrentValue=1500 Title="Riders Online" Data=barChartBoxdata ToolTip="Orders"></BarChartBox>
-				</div>
-				<div class="col-12 col-lg-4">
-					<LineChartBox AverageValue=300 CurrentValue=2000 Title="Monthly Orders" Data=lineChartBoxdata MetricName="Orders"></LineChartBox>
-				</div>
-				<div class="col-12 col-lg-4">
-					<SparkLineBox AverageValue="200" CurrentValue=70.5m Title="Orders Load" Data=sparkLineBoxdata></SparkLineBox>					
-				</div>
-				<div class="col-xl-6 col-12">
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">
-								Sales Overview
-							</h4>
-						</div>
-						<div class="box-body">
-							<div class="chart">
-								<div id="sales-overview"></div>
-							</div>
-						</div>
-					</div>
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">Revenue Groth (%)</h4>
-						</div>
-						<div class="box-body">
-							<div class="row">
-								<div class="col-lg-6 col-12">
-									<div id="progressbar2" class="mx-auto w-200 my-25 position-relative text-center"></div>
-									<h4 class="text-center">Monthly</h4>
-								</div>
-								<div class="col-lg-6 col-12">
-									<div id="progressbar3" class="mx-auto w-200 my-25 position-relative text-center"></div>
-									<h4 class="text-center">Yearly</h4>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-6 col-12">
-					<div class="row">
-						<div class="col-lg-4 col-12">
-							<div class="box">
-								<div class="box-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<h4>Last Month</h4>
-										<h4>12%</h4>
-									</div>
-									<h1 class="my-40">10,200</h1>
-									<div class="d-flex justify-content-between align-items-center">
-										<h5 class="mb-0">Views</h5>
-										<h5 class="mb-0"><i class="ti-arrow-up text-light"></i></h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-12">
-							<div class="box bg-primary">
-								<div class="box-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<h4 class="text-white">Last Month</h4>
-										<h4 class="text-white-50">12%</h4>
-									</div>
-									<h1 class="my-40 text-white">105K</h1>
-									<div class="d-flex justify-content-between align-items-center">
-										<h5 class="mb-0 text-white">Subscription</h5>
-										<h5 class="mb-0 text-white"><i class="ti-arrow-up text-light"></i></h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-12">
-							<div class="box">
-								<div class="box-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<h4>Last Month</h4>
-										<h4>12%</h4>
-									</div>
-									<h1 class="my-40">645</h1>
-									<div class="d-flex justify-content-between align-items-center">
-										<h5 class="mb-0">Videos</h5>
-										<h5 class="mb-0"><i class="ti-arrow-up text-light"></i></h5>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">
-								Budget
-							</h4>
-						</div>
-						<div class="box-body">
-							<div id="morris-bar-chart" class="morris-chart h-200"></div>
-						</div>
-					</div>
-					<div class="box">
-						<div class="box-body">
-							<ol class="c-progress-steps">
-								<li class="c-progress-steps__step  done"><span>Planing</span></li>
-								<li class="c-progress-steps__step  done"><span>Design</span></li>
-								<li class="c-progress-steps__step  current"><span>Development</span></li>
-								<li class="c-progress-steps__step"><span>Testing</span></li>
-							</ol>
-						</div>
-					</div>
-					<div class="box bg-warning">
-						<div class="box-body">
-							<div class="d-flex align-items-center justify-content-between">
-								<div>
-									<h4 class="mb-0 text-dark">Quick note</h4>
-								</div>
-								<div>
-									<a href="javascript:void(0)">
-										<i class="ti-reload text-white"></i>
-									</a>
-								</div>
-							</div>
-							<h2 class="font-weight-300 text-dark">What’s on your mind?</h2>
-							<button type="button" class="waves-effect waves-light btn btn-rounded btn-success float-right">Click Here</button>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-8 col-12">
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">Report</h4>
-						</div>
-						<div class="box-body">
-							<div class="table-responsive">
-								<table class="table mb-0">
-									<thead class="thead-light">
-										<tr>
-											<th>User</th>
-											<th>Email</th>
-											<th>Phone No</th>
-											<th>Comp.</th>
-											<th>Status</th>
-											<th>Act.</th>
-										</tr><!--end tr-->
-									</thead>
+    <div class="container-full">
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12 col-lg-4">
+                    <BarChartBox AverageValue=600 CurrentValue=1500 Title="Riders Online" Data=barChartBoxdata ToolTip="Orders"></BarChartBox>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <LineChartBox AverageValue=300 CurrentValue=2000 Title="Monthly Orders" Data=lineChartBoxdata MetricName="Orders"></LineChartBox>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <SparkLineBox AverageValue="200" CurrentValue=70.5m Title="Orders Load" Data=sparkLineBoxdata></SparkLineBox>
+                </div>
+                <div class="col-xl-6 col-12">
+                    <ApexChart Data=apexChartData Title="Orders Overview" />
+                    <ProgressBarCircleContainer ProgressBars=progressBars Title="Revenue Growths (%)" />
+                </div>
+                <div class="col-xl-6 col-12">
+                    <CardHighlightContainer CardHighlights=cardHighlights />
+                    <MorrisBarChart Data=morrisBarChartData PreUnit="$" Title="Stock Report" />
+                    <ProgressSteps Steps=progressStepsData />
+                    <QuickNote Topic="Quick Note" Description="Sample Description From Shared Component" PromptText="Submit" Mood=ColorMood.Warning Theme=ColorTheme.GradientLight />
+                </div>
+                <div class="col-xl-8 col-12">
+                    <SimpleTable Data=tableData Title="User Reports Auto Generated" >                       
+                    </SimpleTable>
+                    <SimpleTable Title="User Reports Manual Content Population" >
+                        <HeaderContent>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Act.</th>
+                        </HeaderContent>
 
-									<tbody>
-										<tr>
-											<td><img src="../images/avatar/1.jpg" alt="" class="avatar-sm rounded-circle mr-2">JD</td>
-											<td>jd@gmail.com</td>
-											<td>+123456789</td>
-											<td>Josek</td>
-											<td> <span class="badge badge-primary">New Lead</span></td>
-											<td>
-												<a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-												<a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-											</td>
-										</tr><!--end tr-->
-										<tr>
-											<td><img src="../images/avatar/2.jpg" alt="" class="avatar-sm rounded-circle mr-2">MJ</td>
-											<td>mj@gmail.com</td>
-											<td>+123456789</td>
-											<td>Domi</td>
-											<td> <span class="badge badge-primary">New Lead</span></td>
-											<td>
-												<a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-												<a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-											</td>
-										</tr><!--end tr-->
-										<tr>
-											<td><img src="../images/avatar/3.jpg" alt="" class="avatar-sm rounded-circle mr-2">DM</td>
-											<td>dm@gmail.com</td>
-											<td>+123456789</td>
-											<td>Google</td>
-											<td> <span class="badge badge-danger">Lost</span></td>
-											<td>
-												<a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-												<a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-											</td>
-										</tr><!--end tr-->
-										<tr>
-											<td><img src="../images/avatar/4.jpg" alt="" class="avatar-sm rounded-circle mr-2">KS</td>
-											<td>ks@gmail.com</td>
-											<td>+123456789</td>
-											<td>Amazon</td>
-											<td> <span class="badge badge-primary">New Lead</span></td>
-											<td>
-												<a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-												<a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-											</td>
-										</tr><!--end tr-->
-										<tr>
-											<td><img src="../images/avatar/5.jpg" alt="" class="avatar-sm rounded-circle mr-2">TL</td>
-											<td>tl@gmail.com</td>
-											<td>+123456789</td>
-											<td>Liva</td>
-											<td> <span class="badge badge-info">Follow Up</span></td>
-											<td>
-												<a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-												<a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-											</td>
-										</tr><!--end tr-->
-										<tr>
-											<td><img src="../images/avatar/6.jpg" alt="" class="avatar-sm rounded-circle mr-2">MP</td>
-											<td>mp@gmail.com</td>
-											<td>+123456789</td>
-											<td>Sky</td>
-											<td> <span class="badge badge-success">Converted</span></td>
-											<td>
-												<a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-												<a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-											</td>
-										</tr><!--end tr-->
-									</tbody>
-								</table>
-							</div>
-						</div><!--end card-body-->
-					</div>
-				</div>
-				<div class="col-xl-4 col-12">
-					<div class="box bg-primary">
-						<div class="box-header no-border">
-							<h4 class="box-title text-white">
-								Sales Volum‬
-							</h4>
-						</div>
-						<div class="box-body p-0">
-							<div id="area-chart3" class="h-250"></div>
-						</div>
-					</div>
-					<div class="box box-body bg-danger">
-						<h4>
-							<span class="text-white">Visitors</span>
-							<span class="float-right"><a class="btn btn-xs btn-primary" href="#">View</a></span>
-						</h4>
-						<br>
-						<p class="font-size-26 text-white pt-1">84,9658</p>
-						<div class="flexbox font-size-18 text-white">
-							<span><i class="ion-arrow-graph-down-right text-white mr-1"></i> %54 up</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- /.content -->
-	</div>
+                        <RowContent>
+                            @foreach(var user in users)
+                            {
+                                <tr>
+                                    <td><img src="@user.ImageUrl" alt="" class="avatar-sm rounded-circle mr-2">@user.Username</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.FirstName @user.LastName</td>
+                                    <td> <span class=@(user.IsActive? "badge badge-primary":"badge badge-danger")>@user.IsActive</span></td>
+                                    <td>
+                                        <a href="#" class="mr-2" @onclick="HandleAction1"><i class="fa fa-edit text-info"></i></a>
+                                    </td>
+                                </tr><!--end tr-->
+                            }
+                        </RowContent>
+                    </SimpleTable>
+
+                </div>
+                <div class="col-xl-4 col-12">
+                    <MorrisAreaChart Data=morrisAreaChartData Color=ColorMood.Secondary Title="Sales Volume" />
+                    <MetricCard 
+                        ColorMood=ColorMood.Danger 
+                        CTAPromptText="Details" 
+                        CurrentValue=849657m 
+                        GrowthRate=52.6 
+                        Title="Paying Customers" 
+                        IsUpwardMetric=true 
+                        OnCallback="MetricCardAction" />        
+                        
+                       @* <div class="box box-body bg-danger">
+                            <h4>
+                                <span class="text-white">Visitors</span>
+                                <span class="float-right"><a class="btn btn-xs btn-primary" href="#">View</a></span>
+                            </h4>
+                            <br>
+                            <p class="font-size-26 text-white pt-1">84,9658</p>
+                            <div class="flexbox font-size-18 text-white">
+                                <span><i class="ion-arrow-graph-up-right text-white mr-1"></i> %54 up</span>
+                            </div>
+                        </div> *@
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
 </div>
 <!-- /.content-wrapper -->
 @code {
 
+    RenderFragment[][]? progressBars;
+    RenderFragment[][]? cardHighlights;
+    RenderFragment[]? simpleTableActions;
 
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		if (firstRender)
-		{
-			await JSRuntime.InvokeVoidAsync("initializeDashboardCharts");
-		}
-	}
+    IList<decimal>? barChartBoxdata;
+    IList<ChartPoint>? lineChartBoxdata;
+    IList<decimal>? sparkLineBoxdata;
+    ChartData<int>? apexChartData;
+    IEnumerable<DataPoint>? morrisBarChartData;
+    IEnumerable<DataPoint>? morrisAreaChartData;
+
+    IEnumerable<ProgressStep>? progressStepsData;
+    TableData? tableData;
+    IList<UserDto>? users;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //TODO: Any initial script load should happen here
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        PopulateSeedData();
+        RenderFragments();
+    }
+
+    void RenderFragments()
+    {
+
+        progressBars = new RenderFragment[][]
+        {
+            new RenderFragment[]
+            {
+                CreateProgressBar("Weekly", 30),
+                CreateProgressBar("Monthly", 90)
+            },
+            new RenderFragment[]
+            {
+                CreateProgressBar("Quarterly", 55),
+                CreateProgressBar("Yearly", 75)
+            },
+        };
+
+        cardHighlights = new RenderFragment[][]
+        {
+            new RenderFragment[]
+            {
+                CreateCardHighlight("Last Month", 12, 10200, "Views", true),
+                CreateCardHighlight("Last Quarter", 3, 655, "Subscriptions", false),
+                CreateCardHighlight("Last Week", 1.5, 105000, "Videos", true),
+
+            },
+            new RenderFragment[]
+            {
+                CreateCardHighlight("Last Year", 12, 10200, "Users", true),
+                CreateCardHighlight("Last 2 Years", 0.1, 10100, "Users", false),
+                CreateCardHighlight("Last 3 Years", 1.5, 10000, "Users", false),
+            },
+        };
+    }
+
+    void PopulateSeedData()
+    {
+        Random random = new Random();
+
+        barChartBoxdata = new List<decimal>() {
+            random.Next(0, 100),
+            random.Next(0, 100),
+            random.Next(0, 100),
+            random.Next(0, 100),
+            random.Next(0, 100),
+        };
+
+
+        lineChartBoxdata = new List<ChartPoint>() {
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-10), YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-9) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-8) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-7) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-6) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-5) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-4) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-3) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-2) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-1) , YAxis=random.Next(0, 61)},
+
+        };
+
+        sparkLineBoxdata = new List<decimal>() {
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000)
+        };
+
+        apexChartData = new ChartData<int>
+            {
+                XAxis = new List<string>
+        {
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        },
+                Series = new List<ApexChartSeriesData<int>>
+        {
+            new ApexChartSeriesData<int>
+            {
+                Name = "Online",
+                Data = new List<int> {
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                }
+            },
+            new ApexChartSeriesData<int>
+            {
+                Name = "In Store",
+                Data = new List<int> {
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                }
+            },
+            new ApexChartSeriesData<int>
+            {
+                Name = "Total Visits",
+                Data = new List<int> {
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                    random.Next(0, 1000),
+                }
+            }
+
+        }
+            };
+
+        morrisBarChartData = new List<DataPoint>
+        {
+            new DataPoint
+            {
+              XKey = "Dangote Cement",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 23.1},
+                  {"P/E Ratio", 2.3},
+                  {"Cash Flow Ratio", 12.2},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "BUA Cement",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 22.6},
+                  {"P/E Ratio", 5.3},
+                  {"Cash Flow Ratio", 9.7},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "Dangote Sugar",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 1.6},
+                  {"P/E Ratio", 50.6},
+                  {"Cash Flow Ratio", 1.1},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "Flour Mills Of Nigeria",
+              Values = new Dictionary<string, object>
+              {
+                  {"EPS", 25.3},
+                  {"P/E Ratio", 95.3},
+                  {"Cash Flow Ratio", 30},
+              }
+            }
+        };
+
+        morrisAreaChartData = new List<DataPoint>
+        {
+            new DataPoint
+            {
+              XKey = "2013",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 0},
+                  {"Data2", 0},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "2014",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 55},
+                  {"Data2", 20},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "2015",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 25},
+                  {"Data2", 55},
+              }
+            },
+            new DataPoint
+            {
+              XKey = "2016",
+              Values = new Dictionary<string, object>
+              {
+                  {"Data", 65},
+                  {"Data2", 17},
+              }
+            }
+        };
+
+
+
+        progressStepsData = new List<ProgressStep>
+    {
+        new ProgressStep{StepName = "Planning", IsDone=true},
+        new ProgressStep{StepName = "Design", IsDone=true},
+        new ProgressStep{StepName = "Development", IsDone=true},
+        new ProgressStep{StepName = "Deployment", IsDone=true},
+        new ProgressStep{StepName = "QA", IsDone=false},
+
+    };
+
+        users = new List<UserDto>
+    {
+        new UserDto
+        {
+            Id =Guid.NewGuid().ToString(),
+            FirstName = "JD",
+            LastName = "Josek",
+            Email = "jd@gmail.com",
+            Username = "+123456789",
+            ImageUrl = "../images/avatar/1.jpg",
+            IsActive = true
+        },
+        new UserDto
+        {
+            Id =Guid.NewGuid().ToString(),
+            FirstName = "MJ",
+            LastName = "Domi",
+            Email = "mj@gmail.com",
+            Username = "+123456789",
+            ImageUrl = "../images/avatar/2.jpg",
+            IsActive = true
+        },
+        new UserDto
+        {
+            Id =Guid.NewGuid().ToString(),
+            FirstName = "DM",
+            LastName = "Google",
+            Email = "dm@gmail.com",
+            Username = "+123456789",
+            ImageUrl = "../images/avatar/3.jpg",
+            IsActive = false
+        },
+        new UserDto
+        {
+            Id =Guid.NewGuid().ToString(),
+            FirstName = "KS",
+            LastName = "Amazon",
+            Email = "ks@gmail.com",
+            Username = "+123456789",
+            ImageUrl = "../images/avatar/4.jpg",
+            IsActive = false
+        },
+        new UserDto
+        {
+            Id =Guid.NewGuid().ToString(),
+            FirstName = "TL",
+            LastName = "Liva",
+            Email = "tl@gmail.com",
+            Username = "+123456789",
+            ImageUrl = "../images/avatar/5.jpg",
+            IsActive = true
+        },
+        new UserDto
+        {
+            Id =Guid.NewGuid().ToString(),
+            FirstName = "MP",
+            LastName = "Sky",
+            Email = "mp@gmail.com",
+            Username = "+123456789",
+            ImageUrl = "../images/avatar/6.jpg",
+            IsActive = false
+        }
+    };
+
+        tableData = TableDataGenerator.GenerateTableData<UserDto>(users, new Dictionary<string, CellType>
+        {
+            { "ImageUrl", CellType.Image},
+            { "IsActive", CellType.Badge},
+        }, (record, propertyName) =>
+
+    {
+    var user = record as UserDto;
+    if (propertyName == "IsActive")
+    {
+        if (user.IsActive)
+        {
+            return ColorMood.Success;
+        }
+        else
+        {
+            return ColorMood.Danger;
+        }
+    }
+
+    return null;
+    });
+
+    }
+
+    private Task<bool> HandleAction1(MouseEventArgs args)
+    {
+        return Task.FromResult(false);
+    }
+
+     private Task<bool> MetricCardAction(MouseEventArgs args)
+    {
+        return Task.FromResult(false);
+    }
+
+    RenderFragment CreateProgressBar(string title, double value) => builder =>
+    {
+        builder.OpenComponent<ProgressBarCircle>(0);
+        builder.AddAttribute(1, "Value", value);
+        builder.AddAttribute(2, "Title", title);
+        builder.CloseComponent();
+    };
+
+    RenderFragment CreateCardHighlight(string timePeriod, double growthRate, decimal currentValue, string metricName, bool isUpwardMetric) => builder =>
+    {
+        builder.OpenComponent<CardHighlight>(0);
+        builder.AddAttribute(1, "TimePeriod", timePeriod);
+        builder.AddAttribute(2, "GrowthRate", growthRate);
+        builder.AddAttribute(3, "CurrentValue", currentValue);
+        builder.AddAttribute(4, "MetricName", metricName);
+        builder.AddAttribute(5, "IsUpwardMetric", isUpwardMetric);
+        builder.CloseComponent();
+    };
 
 }
 

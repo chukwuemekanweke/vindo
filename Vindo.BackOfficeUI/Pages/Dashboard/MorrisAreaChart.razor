@@ -1,0 +1,66 @@
+﻿@using Vindo.BackOfficeUI.Extensions
+@using Vindo.BackOfficeUI.Models.Colors
+@using Vindo.BackOfficeUI.Models.MorrisBarChart
+
+
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<div class=@($"box bg-{Color.ToString().ToLower()}")>
+    <div class="box-header no-border">
+        <h4 class="box-title text-white">
+            @Title
+        </h4>
+    </div>
+    <div class="box-body p-0">
+        <div id="@DomId" class="h-250"></div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public required string Title{ get; set; }
+    [Parameter]
+    public required ColorMood Color { get; set; }
+
+	[Parameter]
+	public IEnumerable<DataPoint> Data { get; set; } = null!;
+
+    private string DomId { get; set; } = DOMIdGenerator.GenerateId().Substring(0, 10);
+
+	private IJSObjectReference? module;
+
+
+	private async Task InitializeChartAsync()
+	{
+		if (module != null)
+		{
+			await module.InvokeVoidAsync("morrisAreaChartWidget", $"{DomId}", Data.ToGraphDataPoints(), "XKey");
+		}
+	}
+
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			module = await JS.ComponentModule<MorrisAreaChart>();
+			await InitializeChartAsync();
+		}
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await base.OnParametersSetAsync();
+
+		// Reinitialize the chart when parameters change
+		await InitializeChartAsync();
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (module != null)
+		{
+			await module.DisposeAsync();
+		}
+	}
+}

@@ -1,0 +1,112 @@
+﻿@using Vindo.BackOfficeUI.Models.Colors
+@using Vindo.BackOfficeUI.Models.Tables
+<div class="box">
+	<div class="box-header">
+		<h4 class="box-title">@Title</h4>
+	</div>
+	<div class="box-body">
+		<div class="table-responsive">
+			<table class="table mb-0">
+				<thead class="thead-light">
+					<tr>
+						@if (Data == null)
+						{
+							@HeaderContent
+						}
+						else
+						{
+							@foreach (var item in Data.Headers)
+							{
+								<th>@item</th>
+							}
+						}
+
+					</tr>
+				</thead>
+
+				<tbody>
+					
+					@if (Data == null)
+					{
+						@RowContent
+					}
+					else
+					{
+						@for (int i = 0; i < Data.Records.Count; i++)
+						{
+							var columns = Data.Records[i];
+							<tr>
+								@foreach (var column in columns)
+								{
+									<td>@RenderCell(column)</td>
+								}							
+							</tr>
+						}
+					}
+
+					
+					
+				</tbody>
+			</table>
+		</div>
+	</div><!--end card-body-->
+</div>
+
+@code {
+
+	[Parameter]
+	public TableData? Data { get; set; } = null!;
+
+	[Parameter]
+	public string Title { get; set; } = null!;
+
+	[Parameter]
+	public RenderFragment? HeaderContent { get; set; }
+
+	[Parameter]
+	public RenderFragment? RowContent { get; set; }
+
+
+	private RenderFragment RenderCell(CellContent cell)
+	{
+		string? cellContent = cell.Content;
+
+		switch (cell.CellType)
+		{
+			case CellType.Text:
+			default:
+				return builder =>
+				{
+					builder.AddContent(0, cellContent);
+				};
+			case CellType.Image:
+				return builder =>
+				{
+					builder.OpenElement(0, "img");
+					builder.AddAttribute(1, "src", cellContent);
+					builder.AddAttribute(2, "alt", "Image");
+					builder.AddAttribute(3, "class", "avatar-sm rounded-circle mr-2");
+					builder.CloseElement();
+				};
+			case CellType.Badge:
+				return builder =>
+					{
+						builder.OpenElement(0, "span");
+						builder.AddAttribute(1, "class", GetBadgeClassName(cell.ColorMood));
+						builder.AddContent(2, cellContent);			
+						builder.CloseElement();
+					};
+
+		}
+	}
+
+	private string GetBadgeClassName(ColorMood? mood)
+	{
+		if(mood is null)
+		{
+			return string.Empty;
+		}
+		return $"badge badge-{mood.ToString()!.ToLower()}";
+	}
+
+}
