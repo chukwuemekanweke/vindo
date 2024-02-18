@@ -6,7 +6,7 @@
 @inject IJSRuntime JS
 @implements IAsyncDisposable
 
-<div class=@($"box bg-{Color.ToString()}")>
+<div class=@($"box bg-{Color.ToString().ToLower()}")>
     <div class="box-header no-border">
         <h4 class="box-title text-white">
             @Title

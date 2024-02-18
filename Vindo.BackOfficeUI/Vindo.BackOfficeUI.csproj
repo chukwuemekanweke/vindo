@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\convertedJs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Vindo.Models\Vindo.Models.csproj" />
     <ProjectReference Include="..\Vindo.UI.Shared\Vindo.UI.Shared.csproj" />
   </ItemGroup>
@@ -26,6 +22,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Pages\Dashboard\BarChartBox.razor.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Dashboard\MorrisAreaChart.razor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Pages\Dashboard\MorrisBarChart.razor.js">
