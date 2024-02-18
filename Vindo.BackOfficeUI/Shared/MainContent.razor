@@ -36,16 +36,39 @@
                     <QuickNote Topic="Quick Note" Description="Sample Description From Shared Component" PromptText="Submit" Mood=ColorMood.Warning Theme=ColorTheme.GradientLight />
                 </div>
                 <div class="col-xl-8 col-12">
-                    <SimpleTable Data=tableData Title="User Reports">
-
-                        @foreach (var item in users)
-                        {
-                            <TableAction OnAction="@HandleAction1" ColorMood=@ColorMood.Primary />
-
-                        }
-
+                    <SimpleTable Data=tableData Title="User Reports Auto Generated" >                       
                     </SimpleTable>
-                    <div class="box">
+                    <SimpleTable Title="User Reports" >
+                        <HeaderContent>
+                             <thead class="thead-light">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Comp.</th>
+                                    <th>Status</th>
+                                    <th>Act.</th>
+                                </tr><!--end tr-->
+                            </thead>
+                        </HeaderContent>
+
+                        <RowContent>
+                            @foreach(var user in users)
+                            {
+                                <tr>
+                                    <td><img src="@user.ImageUrl" alt="" class="avatar-sm rounded-circle mr-2">@user.Username</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.FirstName @user.LastName</td>
+                                    <td> <span class=@(user.IsActive? "badge badge-primary":"badge badge-primary")>@user.IsActive</span></td>
+                                    <td>
+                                        <TableAction OnAction="HandleAction1" x-record-id=@user.Id Mood="ColorMood.Success"></TableAction>
+                                    </td>
+                                </tr><!--end tr-->
+                            }
+                        </RowContent>
+                    </SimpleTable>
+
+                  @*   <div class="box">
                         <div class="box-header">
                             <h4 class="box-title">Report</h4>
                         </div>
@@ -134,7 +157,7 @@
                                 </table>
                             </div>
                         </div><!--end card-body-->
-                    </div>
+                    </div> *@
                 </div>
                 <div class="col-xl-4 col-12">
                     <div class="box bg-primary">
@@ -169,7 +192,7 @@
 
     RenderFragment[][]? progressBars;
     RenderFragment[][]? cardHighlights;
-    TableAction[]? simpleTableActions;
+    RenderFragment[]? simpleTableActions;
 
     IList<decimal>? barChartBoxdata;
     IList<ChartPoint>? lineChartBoxdata;
@@ -242,7 +265,7 @@
     };
 
 
-        IList<ChartPoint> lineChartBoxdata = new List<ChartPoint>() {
+        lineChartBoxdata = new List<ChartPoint>() {
         new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-10), YAxis=random.Next(0, 61)},
         new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-9) , YAxis=random.Next(0, 61)},
         new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-8) , YAxis=random.Next(0, 61)},
@@ -256,7 +279,7 @@
 
     };
 
-        IList<decimal> sparkLineBoxdata = new List<decimal>() {
+        sparkLineBoxdata = new List<decimal>() {
         random.Next(0, 1000),
         random.Next(0, 1000),
         random.Next(0, 1000),
@@ -279,7 +302,7 @@
         random.Next(0, 1000)
     };
 
-        ChartData<int> apexChartData = new ChartData<int>
+        apexChartData = new ChartData<int>
             {
                 XAxis = new List<string>
         {
@@ -356,7 +379,7 @@
         }
             };
 
-        IEnumerable<DataPoint> morrisBarChartData = new List<DataPoint>
+        morrisBarChartData = new List<DataPoint>
     {
         new DataPoint
         {
@@ -400,7 +423,7 @@
         }
     };
 
-        IEnumerable<ProgressStep> progressStepsData = new List<ProgressStep>
+        progressStepsData = new List<ProgressStep>
     {
         new ProgressStep{StepName = "Planning", IsDone=true},
         new ProgressStep{StepName = "Design", IsDone=true},
@@ -414,6 +437,7 @@
     {
         new UserDto
         {
+            Id =Guid.NewGuid().ToString(),
             FirstName = "JD",
             LastName = "Josek",
             Email = "jd@gmail.com",
@@ -423,6 +447,7 @@
         },
         new UserDto
         {
+            Id =Guid.NewGuid().ToString(),
             FirstName = "MJ",
             LastName = "Domi",
             Email = "mj@gmail.com",
@@ -432,6 +457,7 @@
         },
         new UserDto
         {
+            Id =Guid.NewGuid().ToString(),
             FirstName = "DM",
             LastName = "Google",
             Email = "dm@gmail.com",
@@ -441,6 +467,7 @@
         },
         new UserDto
         {
+            Id =Guid.NewGuid().ToString(),
             FirstName = "KS",
             LastName = "Amazon",
             Email = "ks@gmail.com",
@@ -450,6 +477,7 @@
         },
         new UserDto
         {
+            Id =Guid.NewGuid().ToString(),
             FirstName = "TL",
             LastName = "Liva",
             Email = "tl@gmail.com",
@@ -459,6 +487,7 @@
         },
         new UserDto
         {
+            Id =Guid.NewGuid().ToString(),
             FirstName = "MP",
             LastName = "Sky",
             Email = "mp@gmail.com",
@@ -468,7 +497,7 @@
         }
     };
 
-        TableData? tableData = TableDataGenerator.GenerateTableData<UserDto>(users, new Dictionary<string, CellType>
+        tableData = TableDataGenerator.GenerateTableData<UserDto>(users, new Dictionary<string, CellType>
         {
             { "ImageUrl", CellType.Image},
             { "IsActive", CellType.Badge},
@@ -493,9 +522,10 @@
 
     }
 
-    private void HandleAction1(string value)
+    private Task HandleAction1(Dictionary<string, object> attributes)
     {
-        Console.WriteLine()
+        Console.WriteLine($"Value from table click action: {attributes["x-record-id"]}");
+        return Task.CompletedTask;
     }
 
 
@@ -506,7 +536,6 @@
         builder.AddAttribute(2, "Title", title);
         builder.CloseComponent();
     };
-
 
     RenderFragment CreateCardHighlight(string timePeriod, double growthRate, decimal currentValue, string metricName, bool isUpwardMetric) => builder =>
     {

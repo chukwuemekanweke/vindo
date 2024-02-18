@@ -9,37 +9,42 @@
 			<table class="table mb-0">
 				<thead class="thead-light">
 					<tr>
-
-						@foreach (var item in Data.Headers)
+						@if (Data == null)
 						{
-							<th>@item</th>
+							@HeaderContent
 						}
-
-						@if (ShowActions)
+						else
 						{
-							<th>Actions</th>
+							@foreach (var item in Data.Headers)
+							{
+								<th>@item</th>
+							}
 						}
 
 					</tr>
 				</thead>
 
 				<tbody>
-							
-
-					@for (int i = 0; i < Data.Records.Count; i++)
+					
+					@if (Data == null)
 					{
-						var columns = Data.Records[i];
-						<tr>
-							@foreach (var column in columns)
-							{
-								<td>@RenderCell(column)</td>
-							}
-							@if (ShowActions)
-							{
-								<td>@TableActions![i]</td>
-							}
-						</tr>
+						@RowContent
 					}
+					else
+					{
+						@for (int i = 0; i < Data.Records.Count; i++)
+						{
+							var columns = Data.Records[i];
+							<tr>
+								@foreach (var column in columns)
+								{
+									<td>@RenderCell(column)</td>
+								}							
+							</tr>
+						}
+					}
+
+					
 					
 				</tbody>
 			</table>
@@ -50,14 +55,17 @@
 @code {
 
 	[Parameter]
-	public TableData Data { get; set; } = null!;
+	public TableData? Data { get; set; } = null!;
+
 	[Parameter]
 	public string Title { get; set; } = null!;
 
 	[Parameter]
-	public IList<TableAction>? TableActions { get; set; }
+	public RenderFragment? HeaderContent { get; set; }
 
-	public bool ShowActions { get { return TableActions is not null && TableActions.Count > 0; } }
+	[Parameter]
+	public RenderFragment? RowContent { get; set; }
+
 
 	private RenderFragment RenderCell(CellContent cell)
 	{
@@ -74,22 +82,18 @@
 			case CellType.Image:
 				return builder =>
 				{
-					builder.OpenElement(0, "td");
-					builder.OpenElement(1, "img");
-					builder.AddAttribute(2, "src", cellContent);
-					builder.AddAttribute(3, "alt", "Image");
-					builder.AddAttribute(4, "class", "avatar-sm rounded-circle mr-2");
-					builder.CloseElement();
+					builder.OpenElement(0, "img");
+					builder.AddAttribute(1, "src", cellContent);
+					builder.AddAttribute(2, "alt", "Image");
+					builder.AddAttribute(3, "class", "avatar-sm rounded-circle mr-2");
 					builder.CloseElement();
 				};
 			case CellType.Badge:
 				return builder =>
 					{
-						builder.OpenElement(0, "td");
-						builder.OpenElement(1, "span");
-						builder.AddAttribute(2, "class", GetBadgeClassName(cell.ColorMood));
-						builder.AddContent(4, cellContent);			
-						builder.CloseElement();
+						builder.OpenElement(0, "span");
+						builder.AddAttribute(1, "class", GetBadgeClassName(cell.ColorMood));
+						builder.AddContent(2, cellContent);			
 						builder.CloseElement();
 					};
 

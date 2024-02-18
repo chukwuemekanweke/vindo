@@ -6,7 +6,6 @@ public sealed class TableData
 {
 	public required IList<string> Headers { get; set; }
 	public required IList<List<CellContent>> Records { get; set; }
-
 }
 
 public sealed class CellContent
