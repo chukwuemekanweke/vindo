@@ -40,16 +40,11 @@
                     </SimpleTable>
                     <SimpleTable Title="User Reports" >
                         <HeaderContent>
-                             <thead class="thead-light">
-                                <tr>
-                                    <th>User</th>
-                                    <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Comp.</th>
-                                    <th>Status</th>
-                                    <th>Act.</th>
-                                </tr><!--end tr-->
-                            </thead>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Act.</th>
                         </HeaderContent>
 
                         <RowContent>
@@ -59,105 +54,15 @@
                                     <td><img src="@user.ImageUrl" alt="" class="avatar-sm rounded-circle mr-2">@user.Username</td>
                                     <td>@user.Email</td>
                                     <td>@user.FirstName @user.LastName</td>
-                                    <td> <span class=@(user.IsActive? "badge badge-primary":"badge badge-primary")>@user.IsActive</span></td>
+                                    <td> <span class=@(user.IsActive? "badge badge-primary":"badge badge-danger")>@user.IsActive</span></td>
                                     <td>
-                                        <TableAction OnAction="HandleAction1" x-record-id=@user.Id Mood="ColorMood.Success"></TableAction>
+                                        <a href="#" class="mr-2" @onclick="HandleAction1"><i class="fa fa-edit text-info"></i></a>
                                     </td>
                                 </tr><!--end tr-->
                             }
                         </RowContent>
                     </SimpleTable>
 
-                  @*   <div class="box">
-                        <div class="box-header">
-                            <h4 class="box-title">Report</h4>
-                        </div>
-                        <div class="box-body">
-                            <div class="table-responsive">
-                                <table class="table mb-0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>User</th>
-                                            <th>Email</th>
-                                            <th>Phone No</th>
-                                            <th>Comp.</th>
-                                            <th>Status</th>
-                                            <th>Act.</th>
-                                        </tr><!--end tr-->
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td><img src="../images/avatar/1.jpg" alt="" class="avatar-sm rounded-circle mr-2">JD</td>
-                                            <td>jd@gmail.com</td>
-                                            <td>+123456789</td>
-                                            <td>Josek</td>
-                                            <td> <span class="badge badge-primary">New Lead</span></td>
-                                            <td>
-                                                <a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-                                                <a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-                                            </td>
-                                        </tr><!--end tr-->
-                                        <tr>
-                                            <td><img src="../images/avatar/2.jpg" alt="" class="avatar-sm rounded-circle mr-2">MJ</td>
-                                            <td>mj@gmail.com</td>
-                                            <td>+123456789</td>
-                                            <td>Domi</td>
-                                            <td> <span class="badge badge-primary">New Lead</span></td>
-                                            <td>
-                                                <a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-                                                <a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-                                            </td>
-                                        </tr><!--end tr-->
-                                        <tr>
-                                            <td><img src="../images/avatar/3.jpg" alt="" class="avatar-sm rounded-circle mr-2">DM</td>
-                                            <td>dm@gmail.com</td>
-                                            <td>+123456789</td>
-                                            <td>Google</td>
-                                            <td> <span class="badge badge-danger">Lost</span></td>
-                                            <td>
-                                                <a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-                                                <a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-                                            </td>
-                                        </tr><!--end tr-->
-                                        <tr>
-                                            <td><img src="../images/avatar/4.jpg" alt="" class="avatar-sm rounded-circle mr-2">KS</td>
-                                            <td>ks@gmail.com</td>
-                                            <td>+123456789</td>
-                                            <td>Amazon</td>
-                                            <td> <span class="badge badge-primary">New Lead</span></td>
-                                            <td>
-                                                <a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-                                                <a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-                                            </td>
-                                        </tr><!--end tr-->
-                                        <tr>
-                                            <td><img src="../images/avatar/5.jpg" alt="" class="avatar-sm rounded-circle mr-2">TL</td>
-                                            <td>tl@gmail.com</td>
-                                            <td>+123456789</td>
-                                            <td>Liva</td>
-                                            <td> <span class="badge badge-info">Follow Up</span></td>
-                                            <td>
-                                                <a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-                                                <a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-                                            </td>
-                                        </tr><!--end tr-->
-                                        <tr>
-                                            <td><img src="../images/avatar/6.jpg" alt="" class="avatar-sm rounded-circle mr-2">MP</td>
-                                            <td>mp@gmail.com</td>
-                                            <td>+123456789</td>
-                                            <td>Sky</td>
-                                            <td> <span class="badge badge-success">Converted</span></td>
-                                            <td>
-                                                <a href="#" class="mr-2"><i class="fa fa-edit text-info"></i></a>
-                                                <a href="#"><i class="fas fa-trash-alt text-danger"></i></a>
-                                            </td>
-                                        </tr><!--end tr-->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div><!--end card-body-->
-                    </div> *@
                 </div>
                 <div class="col-xl-4 col-12">
                     <div class="box bg-primary">
@@ -256,51 +161,51 @@
     {
         Random random = new Random();
 
-        IList<decimal> barChartBoxdata = new List<decimal>() {
-        random.Next(0, 100),
-        random.Next(0, 100),
-        random.Next(0, 100),
-        random.Next(0, 100),
-        random.Next(0, 100),
-    };
+        barChartBoxdata = new List<decimal>() {
+            random.Next(0, 100),
+            random.Next(0, 100),
+            random.Next(0, 100),
+            random.Next(0, 100),
+            random.Next(0, 100),
+        };
 
 
         lineChartBoxdata = new List<ChartPoint>() {
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-10), YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-9) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-8) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-7) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-6) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-5) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-4) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-3) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-2) , YAxis=random.Next(0, 61)},
-        new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-1) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-10), YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-9) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-8) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-7) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-6) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-5) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-4) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-3) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-2) , YAxis=random.Next(0, 61)},
+            new ChartPoint { XAxis = DateTime.UtcNow.AddDays(-1) , YAxis=random.Next(0, 61)},
 
-    };
+        };
 
         sparkLineBoxdata = new List<decimal>() {
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000),
-        random.Next(0, 1000)
-    };
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000),
+            random.Next(0, 1000)
+        };
 
         apexChartData = new ChartData<int>
             {
@@ -522,10 +427,9 @@
 
     }
 
-    private Task HandleAction1(Dictionary<string, object> attributes)
+    private Task<bool> HandleAction1(MouseEventArgs args)
     {
-        Console.WriteLine($"Value from table click action: {attributes["x-record-id"]}");
-        return Task.CompletedTask;
+        return Task.FromResult(false);
     }
 
 
