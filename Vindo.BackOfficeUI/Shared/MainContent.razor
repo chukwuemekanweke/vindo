@@ -17,13 +17,20 @@
         <section class="content">
             <div class="row">
                 <div class="col-12 col-lg-4">
-                    <BarChartBox AverageValue=600 CurrentValue=1500 Title="Riders Online" Data=barChartBoxdata ToolTip="Orders"></BarChartBox>
+                    <BarChartBox AverageValue=600 CurrentValue=1500 Title="Riders Online" Data=barChartBoxdata ToolTip="Orders" Color="ColorMood.Info"></BarChartBox>
                 </div>
                 <div class="col-12 col-lg-4">
-                    <LineChartBox AverageValue=300 CurrentValue=2000 Title="Monthly Orders" Data=lineChartBoxdata MetricName="Orders"></LineChartBox>
+                    <LineChartBox AverageValue=300 CurrentValue=2000 Title="Monthly Orders" Data=lineChartBoxdata MetricName="Orders" Color="ColorMood.Success"></LineChartBox>
                 </div>
                 <div class="col-12 col-lg-4">
-                    <SparkLineBox AverageValue="200" CurrentValue=70.5m Title="Orders Load" Data=sparkLineBoxdata></SparkLineBox>
+                    <SparkLineBox AverageValue="200" CurrentValue=70.5m Title="Orders Load" Data=sparkLineBoxdata Color="ColorMood.Primary">
+                        <ChildContent>
+                            	<a href="#" class="dropdown-item" @onclick="HandleAction1">Update data</a>
+						        <a href="#" class="dropdown-item" @onclick="HandleAction1">Detailed log</a>
+						        <a href="#" class="dropdown-item" @onclick="HandleAction1">Statistics</a>
+						        <a href="#" class="dropdown-item" @onclick="HandleAction1">Clear list</a>
+                        </ChildContent>
+                    </SparkLineBox>
                 </div>
                 <div class="col-xl-6 col-12">
                     <ApexChart Data=apexChartData Title="Orders Overview" />

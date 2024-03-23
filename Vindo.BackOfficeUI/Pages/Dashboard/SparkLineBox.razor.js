@@ -1,4 +1,4 @@
-export function sparkLineWidget(element, chartType, qty, chartHeight, interpolation, duration, interval, color, data) {
+export function sparkLineWidget(element, chartType, qty, chartHeight, interpolation, duration, interval, data) {
     if (typeof d3 == 'undefined') {
         console.warn('Warning - d3.min.js is not loaded.');
         return;
@@ -110,10 +110,10 @@ export function sparkLineWidget(element, chartType, qty, chartHeight, interpolat
 
         // Add path based on chart type
         if (chartType == "area") {
-            path.attr("d", area).attr('class', 'd3-area').style("fill", color); // area
+            path.attr("d", area).attr('class', 'd3-area').style("fill", getRandomColor()); // area
         }
         else {
-            path.attr("d", line).attr("class", "d3-line d3-line-medium").style('stroke', color); // line
+            path.attr("d", line).attr("class", "d3-line d3-line-medium").style('stroke', getRandomColor()); // line
         }
 
         // Animate path
@@ -157,10 +157,10 @@ export function sparkLineWidget(element, chartType, qty, chartHeight, interpolat
 
             // Update path type
             if (chartType == "area") {
-                path.attr("d", area).attr('class', 'd3-area').style("fill", color);
+                path.attr("d", area).attr('class', 'd3-area').style("fill", getRandomColor());
             }
             else {
-                path.attr("d", line).attr("class", "d3-line d3-line-medium").style('stroke', color);
+                path.attr("d", line).attr("class", "d3-line d3-line-medium").style('stroke', getRandomColor());
             }
         }
 
@@ -213,3 +213,13 @@ export function sparkLineWidget(element, chartType, qty, chartHeight, interpolat
         }
     }
 };
+
+
+function getRandomColor() {
+	const letters = '0123456789ABCDEF';
+	let color = '#';
+	for (let i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}

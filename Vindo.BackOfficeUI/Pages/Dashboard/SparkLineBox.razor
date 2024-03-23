@@ -1,12 +1,13 @@
-﻿@inject IJSRuntime JS
+﻿@using Vindo.BackOfficeUI.Models.Colors
+@inject IJSRuntime JS
 @implements IAsyncDisposable
 
-<div class="box overflow-hidden">
+<div class="box @(Color.HasValue? $"bg-{Color.ToString()!.ToLower()}": "")">
 	<div class="box-body">
 		<div class="d-flex">
 			<h4 class="mb-0">@(CurrentValue)%</h4>
 			<div class="list-icons ml-auto">
-				<div class="list-icons-item dropdown">
+				@* <div class="list-icons-item dropdown">
 					<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i></a>
 					<div class="dropdown-menu dropdown-menu-right">
 						<a href="#" class="dropdown-item">Update data</a>
@@ -14,7 +15,7 @@
 						<a href="#" class="dropdown-item">Statistics</a>
 						<a href="#" class="dropdown-item">Clear list</a>
 					</div>
-				</div>
+				</div> *@
 			</div>
 		</div>
 
@@ -24,7 +25,7 @@
 		</div>
 	</div>
 
-	<div id="sparklines_basic"></div>
+	<div id="n@(DomId)"></div>
 </div>
 
 @code {
@@ -40,7 +41,21 @@
 	[Parameter]
 	public IList<decimal> Data { get; set; } = null!;
 	[Parameter]
-	public string Color { get; set; } = "#FF5B5C";
+	public ColorMood? Color { get; set; }
+
+	/// <summary>
+	/// Suggested format for the ChildContent
+	///  <a href="#" class="dropdown-item">Update data</a>
+	///  <a href="#" class="dropdown-item">Detailed log</a>
+	///  <a href="#" class="dropdown-item">Statistics</a>
+	///  <a href="#" class="dropdown-item">Clear list</a>
+	/// 
+	/// </summary>
+	[Parameter]
+	public RenderFragment ChildContent{ get; set; }
+
+	private string DomId { get; set; } = DOMIdGenerator.GenerateId().Substring(0, 10);
+
 	
 
 	private IJSObjectReference? module;
@@ -50,7 +65,7 @@
 	{
 		if (module != null)
 		{
-			await module.InvokeVoidAsync("sparkLineWidget", "#sparklines_basic", "area", Data.Count, 50, "basis", 750, 2000, Color, Data);
+			await module.InvokeVoidAsync("sparkLineWidget", $"#n{DomId}", "area", Data.Count, 50, "basis", 750, 2000, Data);
 		}
 	}
 

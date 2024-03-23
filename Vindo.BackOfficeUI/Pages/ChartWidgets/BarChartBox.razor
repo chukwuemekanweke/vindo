@@ -1,8 +1,7 @@
-﻿@using Vindo.BackOfficeUI.Models.Colors
-@inject IJSRuntime JS
+﻿@inject IJSRuntime JS
 @implements IAsyncDisposable
 
-<div class="box @(Color.HasValue? $"bg-{Color.ToString()!.ToLower()}": "")">
+<div class="box bg-info">
 	<div class="box-body">
 		<div class="d-flex">
 			<h4 class="mb-0">@CurrentValue</h4>
@@ -16,7 +15,7 @@
 	</div>
 
 	<div class="container-fluid">
-        <div id="n@(DomId)"></div>
+		<div id="chart_bar_basic"></div>
 	</div>
 </div>
 
@@ -24,7 +23,9 @@
 @code {
 
     [Parameter]
-    public string Title { get; set; } = null!;     
+    public string Title { get; set; } = null!;   
+    [Parameter]
+    public string BarColour { get; set; } = null!;
     [Parameter]
     public decimal CurrentValue{ get; set; }
     [Parameter]
@@ -32,11 +33,9 @@
     [Parameter]
     public IList<decimal> Data { get; set; } = null!;
     [Parameter]
-    public ColorMood? Color { get; set; }
+    public string ToolTip { get; set; } = "#5A8DEE";
     [Parameter]
-    public string ToolTip { get; set; } = null!;
-
-    private string DomId { get; set; } = DOMIdGenerator.GenerateId().Substring(0, 10);
+    public string DataBarColour { get; set; } = "#5A8DEE";
 
     private IJSObjectReference? module;
 
@@ -45,7 +44,7 @@
     {
         if (module != null)
         {
-            await module.InvokeVoidAsync("barChartWidget", $"#n{DomId}", Data.Count, 50, true, "elastic", 1200, 50, ToolTip, Data);
+            await module.InvokeVoidAsync("barChartWidget", "#chart_bar_basic", Data.Count, 50, true, "elastic", 1200, 50, DataBarColour, ToolTip, Data);
         }
     }
 

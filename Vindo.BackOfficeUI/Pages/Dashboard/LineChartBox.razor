@@ -1,8 +1,9 @@
-﻿@using Vindo.BackOfficeUI.Models.LineChart;
+﻿@using Vindo.BackOfficeUI.Models.Colors
+@using Vindo.BackOfficeUI.Models.LineChart;
 @inject IJSRuntime JS
 @implements IAsyncDisposable
 
-<div class="box overflow-hidden">
+<div class="box @(Color.HasValue? $"bg-{Color.ToString()!.ToLower()}": "")">
 	<div class="box-body">
 		<div class="d-flex">
 			<h4 class="mb-0">@CurrentValue</h4>
@@ -14,7 +15,7 @@
 		</div>
 	</div>
 
-	<div id="line_chart_simple"></div>
+	<div id="n@(DomId)"></div>
 </div>
 
 @code {
@@ -31,14 +32,11 @@
 	public decimal AverageValue { get; set; }
 	[Parameter]
 	public IList<ChartPoint> Data { get; set; } = null!;
+
 	[Parameter]
-	public string LineColor { get; set; } = "#FDAC41";
-	[Parameter]
-	public string PathColor { get; set; } = "#FDAC41";
-	[Parameter]
-	public string PointerLineColor { get; set; } = "#FDAC41";
-	[Parameter]
-	public string PointerBackgroundColor { get; set; } = "#fff";
+	public ColorMood? Color { get; set; }
+
+	private string DomId { get; set; } = DOMIdGenerator.GenerateId().Substring(0, 10);
 
 	private IJSObjectReference? module;
 
@@ -48,7 +46,7 @@
 		if (module != null)
 		{
 			var data = Data.Select(x => new { Date = x.XAxis.ToString("MM/dd/yy"), Alpha = x.YAxis });		
-			await module.InvokeVoidAsync("lineChartWidget", "#line_chart_simple", 50, LineColor, PathColor, PointerLineColor, PointerBackgroundColor, data, MetricName);
+			await module.InvokeVoidAsync("lineChartWidget", $"#n{DomId}", 50, data, MetricName);
 		}
 	}
 

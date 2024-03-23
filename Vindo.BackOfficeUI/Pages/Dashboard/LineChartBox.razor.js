@@ -1,5 +1,5 @@
 
-export function lineChartWidget(element, chartHeight, lineColor, pathColor, pointerLineColor, pointerBgColor, dataset, metricName) {
+export function lineChartWidget(element, chartHeight, dataset, metricName) {
     if (typeof d3 == 'undefined') {
         console.warn('Warning - d3.min.js is not loaded.');
         return;
@@ -138,7 +138,7 @@ export function lineChartWidget(element, chartHeight, lineColor, pathColor, poin
                 "clip-path": "url(#clip-line-small)",
                 'class': 'd3-line d3-line-medium'
             })
-            .style('stroke', lineColor);
+            .style('stroke', getRandomColor());
 
         // Animate path
         svg.select('.line-tickets')
@@ -172,7 +172,7 @@ export function lineChartWidget(element, chartHeight, lineColor, pathColor, poin
             .attr('y2', function (d, i) {
                 return height;
             })
-            .style('stroke', pathColor)
+            .style('stroke', getRandomColor())
             .style('stroke-dasharray', '4,2')
             .style('shape-rendering', 'crispEdges');
 
@@ -200,8 +200,8 @@ export function lineChartWidget(element, chartHeight, lineColor, pathColor, poin
             .attr("cy", line.y())
             .attr("r", 3)
             .style({
-                'stroke': pointerLineColor,
-                'fill': pointerBgColor
+                'stroke': getRandomColor(),
+                'fill': getRandomColor()
             });
 
         // Animate points on page load
@@ -318,4 +318,13 @@ export function lineChartWidget(element, chartHeight, lineColor, pathColor, poin
     }
 }
 
+
+function getRandomColor() {
+	const letters = '0123456789ABCDEF';
+	let color = '#';
+	for (let i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
 
