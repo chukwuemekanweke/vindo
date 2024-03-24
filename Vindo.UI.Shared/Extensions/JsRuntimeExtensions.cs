@@ -10,7 +10,7 @@ public static class JsRuntimeExtensions
     where T : ComponentBase
     {
         var type = typeof(T);
-        var sb = new StringBuilder("./");
+        var sb = new StringBuilder("/");
 
         string fullName = type.FullName;
         string name = type.Assembly.GetName().Name;
@@ -26,6 +26,11 @@ public static class JsRuntimeExtensions
         sb.Append(".razor.js");
 
         var file = sb.ToString();
+
+        if (file.Contains("ProgressBar", StringComparison.OrdinalIgnoreCase))
+        {
+
+        }
 
         var result = await js.InvokeAsync<IJSObjectReference>("import", file);
         return result;

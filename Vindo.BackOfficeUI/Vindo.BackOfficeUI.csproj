@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Pages\ChartWidgets\BarChartBox.razor.js">
+    <None Update="Pages\ChartWidgets\C3\C3BarChartBox.razor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Pages\Dashboard\ApexChart.razor.js">

@@ -1,0 +1,75 @@
+﻿@page "/c3-bar-charts"
+@using Vindo.BackOfficeUI.Pages.ChartWidgets.C3
+@using Vindo.BackOfficeUI.Models.C3Chart
+
+<div class="content-wrapper">
+    <div class="container-full">
+
+        <div class="content-header">
+            <div class="d-flex align-items-center">
+                <div class="mr-auto">
+                    <h3 class="page-title">C3 Bar & Pie Chart</h3>
+                    <div class="d-inline-block align-items-center">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
+                                <li class="breadcrumb-item" aria-current="page">Chart</li>
+                                <li class="breadcrumb-item active" aria-current="page">C3 Bar & Pie Chart</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <section class="content">
+            <div class="callout bg-info">
+                <h4>Nots!</h4>
+                <span class="badge badge-lg badge-danger">For more info please check the plugin's official <a class="m-link" href="https://c3js.org/" target="_blank">demos &amp; documentation</a></span>
+            </div>
+            <div class="row">
+                <C3BarChartBox Title="Bar Chart" Data=c3ChartBoxData class="col-xl-4 col-12">
+
+                </C3BarChartBox>
+            </div>
+
+
+        </section>
+
+    </div>
+</div>
+
+@code {
+
+    C3BarChart? c3ChartBoxData;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //TODO: Any initial script load should happen here
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        PopulateSeedData();
+    }
+
+    void PopulateSeedData()
+    {
+
+        c3ChartBoxData = new C3BarChart
+        {
+                Labels = new string[] { "Option 1", "Option 2" },
+                ShowGrid = true,
+                RotateAxis = true,
+                Data = new decimal[][]
+                {
+                    new decimal[]{30, 200, 100, 400, 150, 250},
+                    new decimal[]{130, 100, 140, 200, 150, 50}
+                }
+        };
+
+    }
+}
